@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        DatabaseBridge.initRef()
+        DatabaseBridge.signIn(withEmail: "jjiangweilan@gmail.com", password: "123456" , completion : nil) //123456
         
         return true
     }
