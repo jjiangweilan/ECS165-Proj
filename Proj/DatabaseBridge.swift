@@ -8,13 +8,36 @@
 
 import Foundation
 import Firebase
-class DatabaseBridge {
-    static func createUser(withEmail : String, password : String) -> Bool {
-        Auth.auth().createUser(withEmail: withEmail, password: password){ (authResult, error) in
+import FirebaseDatabase
 
-            guard let user = authResult?.user else { return }
+
+class DatabaseBridge {
+    static var ref : DatabaseReference!
+    static func initRef() {
+        if let _ = ref {
+
         }
-        
+        else {
+            ref = Database.database().reference()
+        }
+    }
+    
+    //completion function can't be warpped since it happends in the future
+    static func createUser(withEmail : String, password : String, completion : AuthDataResultCallback?) -> Bool {
+        Auth.auth().createUser(withEmail: withEmail, password: password, completion: completion)
         return true;
+    }
+    
+    //completion function can't be warpped since it happends in the future
+    static func signIn(withEmail : String, password : String, completion : AuthDataResultCallback?){
+        Auth.auth().signIn(withEmail: withEmail, password: password, completion : completion)
+    }
+    
+    static func updateUserInfo(path : String, value : String) {
+        ref.child("users/\(Auth.auth().currentUser!.uid)/\(path)").setValue(value)
+    }
+    
+    static func createUserData(user : AuthDataResult) {
+        
     }
 }
