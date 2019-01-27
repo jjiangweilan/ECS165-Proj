@@ -1,0 +1,6 @@
+*
+!Proj.xcodeproj
+!**/Proj
+!Podfile
+!.gitignore
+GoogleService-Info.plist
