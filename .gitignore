@@ -3,4 +3,6 @@
 !**/Proj
 !Podfile
 !.gitignore
+!README.md
+!LICENSE
 GoogleService-Info.plist

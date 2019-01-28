@@ -37,7 +37,24 @@ class DatabaseBridge {
         ref.child("users/\(Auth.auth().currentUser!.uid)/\(path)").setValue(value)
     }
     
-    static func createUserData(user : AuthDataResult) {
-        
+    static func createUserData(user : AuthDataResult, name : String, email : String) {
+        var userDataTemplate = [
+            "username" : name,
+            "email" : email,
+            "profile picture" : "nil",
+            "gender" : "secrete",
+            "phone" : "123456"
+        ]
+        ref.child("users/\(user.user.uid)").setValue(userDataTemplate)
+    }
+    
+    static func getUserInfo(snapshotFunc : @escaping (DataSnapshot) -> Void) {
+
+        ref.child("users").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            snapshotFunc(snapshot)
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
 }

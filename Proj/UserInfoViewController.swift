@@ -4,11 +4,12 @@
 //
 //  Created by Xiaofang Jiang on 1/27/19.
 //  Copyright © 2019 jiehong jiang. All rights reserved.
-//
+// 
 
 import UIKit
+import Firebase
 
-class userInfoViewController: UIViewController {
+class UserInfoViewController: UIViewController {
 
     
     @IBOutlet weak var profilePhoto: UIButton!
@@ -23,14 +24,28 @@ class userInfoViewController: UIViewController {
     
     
     @IBAction func logout(_ sender: UIButton) {
-        print("User wants to Log out")
+        do {
+            try Auth.auth().signOut()
+            self.dismiss(animated: true, completion: nil)
+        }
+        catch {
+            //signout failed
+        }
         //jump to the first page
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        DatabaseBridge.getUserInfo(snapshotFunc: { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            self.name.text =  value?["username"] as? String ?? ""
+            self.email.text =  value?["email"] as? String ?? ""
+            self.gender.text =  value?["gender"] as? String ?? ""
+            self.phone.text =  value?["phone"] as? String ?? ""
+        })
+        // Do any additional setup after loading the view.
         // Do any additional setup after loading the view.
     }
     

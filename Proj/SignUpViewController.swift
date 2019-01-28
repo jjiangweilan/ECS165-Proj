@@ -66,9 +66,9 @@ class SignUpViewController: UIViewController {
         
         
         //after all validation:
-        var emailStr : String? = EmailTextField.text
-        var passwordStr : String? = PasswordTextField.text
-        
+        var emailStr : String! = EmailTextField.text
+        var passwordStr : String! = PasswordTextField.text
+        let userName :String! = UserNameTextField.text
         DatabaseBridge.createUser(withEmail: emailStr!, password: passwordStr!) {
             (user, error) in
             self.view.isUserInteractionEnabled = true
@@ -88,6 +88,7 @@ class SignUpViewController: UIViewController {
             }
             else {
                 user?.user.sendEmailVerification(completion: (nil))
+                DatabaseBridge.createUserData(user: user!, name: userName, email: emailStr)
             }
         }
     }

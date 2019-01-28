@@ -48,8 +48,10 @@ class SignInViewController: UIViewController {
                     
                     }
                 }
+                else {
+                    self.showUserInfoView()
+                }
             }
-            
         }
     }
     
@@ -61,6 +63,11 @@ class SignInViewController: UIViewController {
     }
     
     
+    func showUserInfoView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "UserInfoViewController")
+        self.present(controller, animated: true, completion: nil)
+    }
     
     
     /*

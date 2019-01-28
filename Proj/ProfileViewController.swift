@@ -4,11 +4,11 @@
 //
 //  Created by Xiaofang Jiang on 1/27/19.
 //  Copyright © 2019 jiehong jiang. All rights reserved.
-//
+// 
 
 import UIKit
 
-class profileViewController: UIViewController {
+class ProfileViewController: UIViewController {
 
     
     @IBOutlet weak var fastFood: UIButton!
@@ -21,7 +21,7 @@ class profileViewController: UIViewController {
     @IBOutlet weak var dessert: UIButton!
     @IBOutlet weak var brunch: UIButton!
     
-    var userChoices: Array<String>
+    var userChoices: Array<String> = []
     
     @IBAction func fastFoodTouched(_ sender: UIButton) {
         print("Fast Food being choosed")
@@ -79,8 +79,6 @@ class profileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
 
