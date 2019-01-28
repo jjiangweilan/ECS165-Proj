@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Firebase
 class SignUpViewController: UIViewController {
 
     
@@ -61,7 +61,35 @@ class SignUpViewController: UIViewController {
         
         // start activity indicator
         myActivityIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
         view.addSubview((myActivityIndicator))
+        
+        
+        //after all validation:
+        var emailStr : String? = EmailTextField.text
+        var passwordStr : String? = PasswordTextField.text
+        
+        DatabaseBridge.createUser(withEmail: emailStr!, password: passwordStr!) {
+            (user, error) in
+            self.view.isUserInteractionEnabled = true
+            myActivityIndicator.removeFromSuperview()
+            
+            if let e = error {
+                switch e {
+                case AuthErrorCode.emailAlreadyInUse:
+                    print("email in use")
+                case AuthErrorCode.invalidEmail:
+                    print("email is invalid")
+                case AuthErrorCode.missingEmail:
+                    print("missing email")
+                default:
+                    break
+                }
+            }
+            else {
+                user?.user.sendEmailVerification(completion: (nil))
+            }
+        }
     }
     
     

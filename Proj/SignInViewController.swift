@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Firebase
 class SignInViewController: UIViewController {
 
     @IBOutlet weak var EmailTextField: UITextField!
@@ -21,7 +21,36 @@ class SignInViewController: UIViewController {
     
 
     @IBAction func SignInbuttonTapped(_ sender: Any) {
-        print("sign in button tapped")
+        var emailStr : String? = EmailTextField.text
+        var passwordStr : String? = PasswordTextField.text
+        
+        //emailStr, passwordStr should be validated before passing to this function
+        //...
+        DatabaseBridge.signIn(withEmail: emailStr!, password: passwordStr!) {
+            (user, error) in
+            
+            if let e = error {
+                switch e {
+                case AuthErrorCode.wrongPassword:
+                    print("wrong password")
+                default:
+                    print(e)
+                }
+            }
+            
+            if let u = user {
+                if !u.user.isEmailVerified {
+                    do {
+                        try Auth.auth().signOut()
+                        debugPrint("signed out because email is not vertified")
+                    }
+                    catch {
+                    
+                    }
+                }
+            }
+            
+        }
     }
     
     @IBAction func SignUpButton(_ sender: Any) {
