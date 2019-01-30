@@ -38,7 +38,7 @@ class DatabaseBridge {
     }
     
     static func createUserData(user : AuthDataResult, name : String, email : String) {
-        var userDataTemplate = [
+        let userDataTemplate = [
             "username" : name,
             "email" : email,
             "profile picture" : "nil",
@@ -55,6 +55,37 @@ class DatabaseBridge {
             
         }) { (error) in
             print(error.localizedDescription)
+        }
+    }
+    
+    static func resetPassword(withEmail : String, completion: SendPasswordResetCallback?) {
+        Auth.auth().sendPasswordReset(withEmail: withEmail, completion: completion);
+    }
+    
+    static func searchUser(userName : String, callback : @escaping (DataSnapshot) -> Void) {
+        ref.child("users").queryOrdered(byChild: "username").queryEqual(toValue: userName).observeSingleEvent(of: DataEventType.value, with: callback)
+        /*{ (snapshot) in
+         let userInfo = snapshot.value as? [String : AnyObject] ?? [:]
+         }*/
+    }
+    
+    static func updateUserInfo(key : String, value : String) {
+        let user = Auth.auth().currentUser!
+        ref.child("users/\(user.uid)/\(key)").setValue(value);
+    }
+    
+    static func databaseHas(path : String, hasCallback : (() -> Void)?, hasNotCallback : (() -> Void)?) {
+        ref.child(path).observeSingleEvent(of: DataEventType.value) { (snapshot) in
+            if (snapshot.exists()) {
+                if let f = hasCallback {
+                    f()
+                }
+            }
+            else {
+                if let f = hasNotCallback {
+                    f()
+                } 
+            }
         }
     }
 }
