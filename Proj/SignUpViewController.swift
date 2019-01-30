@@ -75,26 +75,15 @@ class SignUpViewController: UIViewController {
             myActivityIndicator.removeFromSuperview()
             
             if let e = error {
-                switch e {
-                case AuthErrorCode.emailAlreadyInUse:
-                    print("email in use")
-                case AuthErrorCode.invalidEmail:
-                    print("email is invalid")
-                case AuthErrorCode.missingEmail:
-                    print("missing email")
-                default:
-                    break
-                }
+                self.displayAlert(userMessage: e.localizedDescription)
             }
-            else {
-                user?.user.sendEmailVerification(completion: (nil))
+            if let u = user {
+                u.user.sendEmailVerification(completion: (nil))
                 DatabaseBridge.createUserData(user: user!, name: userName, email: emailStr)
+                self.displayAlert(userMessage: "Email vertification has been sent")
             }
         }
     }
-    
-    
-        
     
     func displayAlert(userMessage:String) -> Void {
         DispatchQueue.main.async
@@ -103,10 +92,6 @@ class SignUpViewController: UIViewController {
                 let OKAction = UIAlertAction(title: "OK", style: .default)
                 { (action:UIAlertAction!) in
                     print("Ok button tapped")
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                    
                 }
                 alertController.addAction(OKAction)
                 self.present(alertController,animated: true, completion: nil)

@@ -42,7 +42,7 @@ class SignInViewController: UIViewController {
                 if !u.user.isEmailVerified {
                     do {
                         try Auth.auth().signOut()
-                        debugPrint("signed out because email is not vertified")
+                        self.displayAlert(userMessage: "Email is not vertified")
                     }
                     catch {
                     
@@ -69,7 +69,24 @@ class SignInViewController: UIViewController {
         self.present(controller, animated: true, completion: nil)
     }
     
-    
+    func displayAlert(userMessage:String) -> Void {
+        DispatchQueue.main.async
+            {
+                let alertController = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default)
+                { (action:UIAlertAction!) in
+                    print("Ok button tapped")
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    
+                }
+                alertController.addAction(OKAction)
+                self.present(alertController,animated: true, completion: nil)
+                
+            }
+    }
+}
     /*
      
      // MARK: - Navigation
@@ -80,5 +97,3 @@ class SignInViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
-}
