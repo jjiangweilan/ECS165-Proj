@@ -15,7 +15,7 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+       
         // Do any additional setup after loading the view.
     }
     
@@ -23,6 +23,17 @@ class SignInViewController: UIViewController {
     @IBAction func SignInbuttonTapped(_ sender: Any) {
         var emailStr : String? = EmailTextField.text
         var passwordStr : String? = PasswordTextField.text
+        
+        // validate required fields are not empty
+        if  (EmailTextField.text?.isEmpty)! ||
+            (PasswordTextField.text?.isEmpty)!
+        {
+            //Display alert messege and return
+            displayAlert(userMessage: "All fields are required to fill in")
+            return
+        }
+        
+        
         
         //emailStr, passwordStr should be validated before passing to this function
         //...
