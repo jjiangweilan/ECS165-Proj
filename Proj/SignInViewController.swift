@@ -15,7 +15,8 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        self.view.viewWithTag(1)!.layer.cornerRadius = 5
+        
         // Do any additional setup after loading the view.
     }
     
@@ -41,15 +42,10 @@ class SignInViewController: UIViewController {
             (user, error) in
             
             if let e = error {
-                switch e {
-                case AuthErrorCode.wrongPassword:
-                    print("wrong password")
-                default:
-                    print(e)
-                }
+                self.displayAlert(userMessage: e.localizedDescription)
             }
             
-            if let u = user {
+            else if let u = user {
                 if !u.user.isEmailVerified {
                     do {
                         try Auth.auth().signOut()
@@ -69,8 +65,9 @@ class SignInViewController: UIViewController {
     @IBAction func SignUpButton(_ sender: Any) {
         print("SignUpButton tapped")
         
-        let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
-        self.present(signUpViewController, animated: true)
+        //this is done in storyboard
+//        let signUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+//        self.present(signUpViewController, animated: true)
     }
     
     

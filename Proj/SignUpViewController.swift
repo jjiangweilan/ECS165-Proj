@@ -19,7 +19,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -80,18 +80,20 @@ class SignUpViewController: UIViewController {
             if let u = user {
                 u.user.sendEmailVerification(completion: (nil))
                 DatabaseBridge.createUserData(user: user!, name: userName, email: emailStr)
-                self.displayAlert(userMessage: "Email vertification has been sent")
+                self.displayAlert(userMessage: "Email vertification has been sent", okAction: {() in self.dismiss(animated: true, completion: nil)})
             }
         }
     }
     
-    func displayAlert(userMessage:String) -> Void {
+    func displayAlert(userMessage:String, okAction : (() -> Void)? = nil) -> Void {
         DispatchQueue.main.async
             {
                 let alertController = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
                 let OKAction = UIAlertAction(title: "OK", style: .default)
                 { (action:UIAlertAction!) in
-                    print("Ok button tapped")
+                    if let action = okAction {
+                        action()
+                    }
                 }
                 alertController.addAction(OKAction)
                 self.present(alertController,animated: true, completion: nil)
