@@ -11,70 +11,36 @@ import UIKit
 class ProfileViewController: UIViewController {
 
     
-    @IBOutlet weak var fastFood: UIButton!
-    @IBOutlet weak var resturant: UIButton!
-    @IBOutlet weak var homemade: UIButton!
-    @IBOutlet weak var asianFood: UIButton!
-    @IBOutlet weak var americaFood: UIButton!
-    @IBOutlet weak var europeFood: UIButton!
-    @IBOutlet weak var africaFood: UIButton!
-    @IBOutlet weak var dessert: UIButton!
-    @IBOutlet weak var brunch: UIButton!
-    
-    var userChoices: Array<String> = []
-    
-    @IBAction func fastFoodTouched(_ sender: UIButton) {
-        print("Fast Food being choosed")
-        userChoices.append("FastFood")
+    @IBAction func fastFoodTapped(_ sender: UIButton) {
+        print("FastFood choosed")
     }
     
     
-    @IBAction func resturantTouched(_ sender:UIButton) {
-        print("Resturant being choosed")
-        userChoices.append("Resturant")
+    @IBAction func dessertTapped(_ sender: UIButton) {
+        print("Dessert choosed")
     }
     
-
-    @IBAction func homemadeTouched(_ sender: UIButton) {
-        print("Homemade being choosed")
-        userChoices.append("Homemade")
+    @IBAction func breakfastTapped(_ sender: UIButton) {
+        print("Breakfast choosed")
     }
     
-    
-    @IBAction func asianFoodTouched(_ sender:UIButton) {
-        print("Asian Food being choose")
-        userChoices.append("Asian Food")
+    @IBAction func chineseFoodTapped(_ sender: UIButton) {
+        print("ChineseFood choosed")
     }
     
-    
-    @IBAction func americaFoodTouched(_ sender: UIButton) {
-        print("America Food being choose")
-        userChoices.append("America Food")
+    @IBAction func japaneseFoodTapped(_ sender: Any) {
+        print("JapaneseFood choosed")
     }
     
+    @IBAction func koreanFoodTapped(_ sender: UIButton) {
+        print("KoreanFood choosed")
+    }
     
-    @IBAction func europeFoodTouched(_ sender: UIButton) {
-        print("Europe Food being choosed")
-        userChoices.append("Europe Food")
+    @IBAction func tahiFoodTapped(_ sender: UIButton) {
+        print("ThaiFood choosed")
     }
     
     
-    @IBAction func africaFoodTouched(_ sender: UIButton) {
-        print("Africa Food being choosed")
-        userChoices.append("Africa Food")
-    }
-    
-    
-    @IBAction func dessertTouched(_ sender: UIButton) {
-        print("Dessert being choosed")
-        userChoices.append("Dessert")
-    }
-    
-    
-    @IBAction func brunchTouched(_ sender: UIButton) {
-        print("Brunch being choosed")
-        userChoices.append("Brunch")
-    }
     
     
     override func viewDidLoad() {

@@ -21,9 +21,7 @@
 		978C56A221E7B88A00F5B471 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */; };
 		978C56AD21E7B88A00F5B471 /* ProjTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56AC21E7B88A00F5B471 /* ProjTests.swift */; };
 		978C56B821E7B88A00F5B471 /* ProjUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56B721E7B88A00F5B471 /* ProjUITests.swift */; };
-		97A1945021FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */; };
 		97A1945121FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */; };
-		97A1945221FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */; };
 		97A1946021FF7CDB00A5B3E7 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1945F21FF7CDB00A5B3E7 /* UserInfoViewController.swift */; };
 		97A1946221FF7CE100A5B3E7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1946121FF7CE100A5B3E7 /* ProfileViewController.swift */; };
 		CF53F0FD37C7ECA8BA0400B2 /* Pods_ProjTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD91D600DF5B75213A87B154 /* Pods_ProjTests.framework */; };
@@ -144,10 +142,10 @@
 			isa = PBXGroup;
 			children = (
 				4C077B6821FD1CC400B01A9F /* GoogleService-Info.plist */,
+				97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */,
 				978C569421E7B88800F5B471 /* AppDelegate.swift */,
 				97A1946121FF7CE100A5B3E7 /* ProfileViewController.swift */,
 				97A1945F21FF7CDB00A5B3E7 /* UserInfoViewController.swift */,
-				97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */,
 				978C569821E7B88800F5B471 /* Main.storyboard */,
 				978C569E21E7B88A00F5B471 /* Assets.xcassets */,
 				978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */,
@@ -259,6 +257,7 @@
 				TargetAttributes = {
 					978C569021E7B88800F5B471 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 					978C56A721E7B88A00F5B471 = {
 						CreatedOnToolsVersion = 10.1;
@@ -428,7 +427,6 @@
 				4CD1083521FD2D1B0067408C /* SignUpViewController.swift in Sources */,
 				97A1946221FF7CE100A5B3E7 /* ProfileViewController.swift in Sources */,
 				978C569D21E7B88800F5B471 /* Proj.xcdatamodeld in Sources */,
-				97A1945021FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,7 +444,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				978C56B821E7B88A00F5B471 /* ProjUITests.swift in Sources */,
-				97A1945221FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +603,7 @@
 			baseConfigurationReference = ECE6DB20EC8F4BD79C5176BB /* Pods-Proj.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Proj/Info.plist;
@@ -615,6 +613,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = jiehong.Proj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Proj/Proj-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -625,6 +625,7 @@
 			baseConfigurationReference = C423663BB1B7762D07E80A93 /* Pods-Proj.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Proj/Info.plist;
@@ -634,6 +635,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = jiehong.Proj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Proj/Proj-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
