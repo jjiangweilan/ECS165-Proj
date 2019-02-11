@@ -10,6 +10,9 @@ target 'Proj' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'FirebaseUI/Facebook'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
   target 'ProjTests' do
     inherit! :search_paths
     # Pods for testing
