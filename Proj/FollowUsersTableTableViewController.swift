@@ -30,12 +30,12 @@ class FollowUsersTableTableViewController: UITableViewController, UISearchResult
         definesPresentationContext = true
         tableView.tableHeaderView =  searchController.searchBar
         
-        databaseRef.child("user_profiles").queryOrdered(byChild:"username" ).observe(.childAdded, with: {(snapshot) in
-            self.usersArray.append(snapshot.value as? NSDictionary?)
+    databaseRef.child("user_profiles").queryOrdered(byChild:"username" ).observe(.childAdded, with: {(snapshot) in
+            //self.usersArray.append(snapshot.value as? NSDictionary?)/ TO_DO
             
             //insert the rows
             
-            self.followUsersTableView.insertRows(at: [IndexPath(row:self,usersArray.count-1, section:0)], with: UITableView.RowAnimation.automatic)
+            //self.followUsersTableView.insertRows(at: [IndexPath(row:self,usersArray.count-1, section:0)], with: UITableView.RowAnimation.automatic) // TO_DO
         })
         
         {(error) in

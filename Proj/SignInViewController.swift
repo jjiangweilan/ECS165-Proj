@@ -85,7 +85,7 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
     
     func showUserInfoView() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "UserInfoViewController")
+        let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController")
         self.present(controller, animated: true, completion: nil)
     }
     
@@ -103,7 +103,6 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
                 }
                 alertController.addAction(OKAction)
                 self.present(alertController,animated: true, completion: nil)
-                
             }
     }
     

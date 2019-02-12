@@ -69,9 +69,8 @@ class DatabaseBridge {
          }*/
     }
     
-    static func updateUserInfo(key : String, value : String) {
-        let user = Auth.auth().currentUser!
-        ref.child("users/\(user.uid)/\(key)").setValue(value);
+    static func queryUserInfo(byEmail email : String,  callback : @escaping (DataSnapshot) -> Void) {
+        ref.child("users").queryOrdered(byChild: "email").queryEqual(toValue: email).observeSingleEvent(of: DataEventType.value, with: callback)
     }
     
     static func databaseHas(path : String, hasCallback : (() -> Void)?, hasNotCallback : (() -> Void)?) {
