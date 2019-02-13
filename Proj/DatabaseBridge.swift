@@ -33,8 +33,8 @@ class DatabaseBridge {
         Auth.auth().signIn(withEmail: withEmail, password: password, completion : completion)
     }
     
-    static func updateUserInfo(path : String, value : String) {
-        ref.child("users/\(Auth.auth().currentUser!.uid)/\(path)").setValue(value)
+    static func updateUserInfo(key : String, value : String) {
+        ref.child("users/\(Auth.auth().currentUser!.uid)/\(key)").setValue(value)
     }
     
     static func createUserData(user : AuthDataResult, name : String, email : String) {

@@ -1,17 +1,28 @@
 //
-//  ProfileViewController.swift
+//  followingViewController.swift
 //  Proj
 //
-//  Created by jiehong jiang on 2/12/19.
+//  Created by Xiaofang Jiang on 2/12/19.
 //  Copyright © 2019 jiehong jiang. All rights reserved.
 //
 
 import UIKit
-import Firebase
-import FBSDKLoginKit
-import FBSDKCoreKit
 
-class ProfileViewController: UIViewController {
+class FollowingViewController: UIViewController {
+    
+    @IBOutlet weak var followButton: UIButton!
+    
+    @IBOutlet weak var searchedName: UILabel!
+    @IBAction func followingStarts(_ sender: Any) {
+        
+        if followButton.currentTitle == "Follow"{
+            followButton.setTitle("Following", for: .normal)
+            followButton.tintColor = UIColor.blue
+        }
+        else{
+            followButton.setTitle("Follow",for: .normal)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,17 +30,7 @@ class ProfileViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func logout(_ sender: UIButton) {
-        do {
-            try Auth.auth().signOut()
-            FBSDKLoginManager.init().logOut()
-            self.dismiss(animated: true, completion: nil)
-        }
-        catch {
-            //signout failed
-        }
-        //jump to the first page
-    }
+
     /*
     // MARK: - Navigation
 

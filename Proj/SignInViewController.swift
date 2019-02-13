@@ -68,7 +68,7 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
                     }
                 }
                 else {
-                    self.showUserInfoView()
+                    self.showMainView()
                 }
             }
         }
@@ -83,7 +83,7 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
     }
     
     
-    func showUserInfoView() {
+    func showMainView() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController")
         self.present(controller, animated: true, completion: nil)
@@ -107,9 +107,15 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        
+        
         if let error = error {
             print("Error took place \(error.localizedDescription)")
                 return
+        }
+        
+        if result.isCancelled {
+            return
         }
         
         let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
@@ -121,7 +127,7 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
             DatabaseBridge.databaseHas(path: "users/\(authResult!.user.uid)", hasCallback: nil, hasNotCallback: {
                 DatabaseBridge.createUserData(user: authResult!, name: authResult?.user.displayName ?? "", email: authResult?.user.email ?? "")
             })
-            self.showUserInfoView()
+            self.showMainView()
         }
     }
     

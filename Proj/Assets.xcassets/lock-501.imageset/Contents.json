@@ -2,17 +2,15 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "588a6686d06f6719692a2d1a.png",
+      "filename" : "icons8-padlock-500.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "588a6686d06f6719692a2d1a-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "588a6686d06f6719692a2d1a-2.png",
       "scale" : "3x"
     }
   ],

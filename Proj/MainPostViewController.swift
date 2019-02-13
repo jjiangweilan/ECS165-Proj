@@ -7,7 +7,7 @@
 
 import UIKit
 
-class mainPostViewController: UIViewController {
+class MainPostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

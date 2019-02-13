@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  TabBarController.swift
 //  Proj
 //
 //  Created by jiehong jiang on 2/12/19.
@@ -7,29 +7,16 @@
 //
 
 import UIKit
-import Firebase
-import FBSDKLoginKit
-import FBSDKCoreKit
 
-class ProfileViewController: UIViewController {
+class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.tabBar.itemPositioning = .fill
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func logout(_ sender: UIButton) {
-        do {
-            try Auth.auth().signOut()
-            FBSDKLoginManager.init().logOut()
-            self.dismiss(animated: true, completion: nil)
-        }
-        catch {
-            //signout failed
-        }
-        //jump to the first page
-    }
+
     /*
     // MARK: - Navigation
 

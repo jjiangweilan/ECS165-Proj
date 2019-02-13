@@ -22,13 +22,17 @@
 		978C56AD21E7B88A00F5B471 /* ProjTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56AC21E7B88A00F5B471 /* ProjTests.swift */; };
 		978C56B821E7B88A00F5B471 /* ProjUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56B721E7B88A00F5B471 /* ProjUITests.swift */; };
 		979BC1452212877600FCD723 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC1442212877600FCD723 /* SearchViewController.swift */; };
+		979BC14A22136FF400FCD723 /* ForgetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14922136FF400FCD723 /* ForgetPassViewController.swift */; };
+		979BC14C22136FFB00FCD723 /* ResetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */; };
+		979BC14E2213940F00FCD723 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14D2213940F00FCD723 /* ProfileViewController.swift */; };
+		979BC1502213AA7000FCD723 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14F2213AA7000FCD723 /* TabBarController.swift */; };
+		979BC1522213B12200FCD723 /* FollowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC1512213B12200FCD723 /* FollowingViewController.swift */; };
 		97A1945021FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */; };
 		97A1945121FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */; };
 		97A1945221FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */; };
-		97A1946021FF7CDB00A5B3E7 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1945F21FF7CDB00A5B3E7 /* UserInfoViewController.swift */; };
-		97A1946221FF7CE100A5B3E7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1946121FF7CE100A5B3E7 /* ProfileViewController.swift */; };
+		97A1946021FF7CDB00A5B3E7 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1945F21FF7CDB00A5B3E7 /* ProfileTableViewController.swift */; };
 		CF53F0FD37C7ECA8BA0400B2 /* Pods_ProjTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD91D600DF5B75213A87B154 /* Pods_ProjTests.framework */; };
-		DC3366E222113C17009D98C2 /* mainPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3366E122113C17009D98C2 /* mainPostViewController.swift */; };
+		DC3366E222113C17009D98C2 /* MainPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3366E122113C17009D98C2 /* MainPostViewController.swift */; };
 		DC3366E422113C4A009D98C2 /* FollowUsersTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3366E322113C4A009D98C2 /* FollowUsersTableTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,13 +73,17 @@
 		978C56B721E7B88A00F5B471 /* ProjUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjUITests.swift; sourceTree = "<group>"; };
 		978C56B921E7B88A00F5B471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		979BC1442212877600FCD723 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		979BC14922136FF400FCD723 /* ForgetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPassViewController.swift; sourceTree = "<group>"; };
+		979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPassViewController.swift; sourceTree = "<group>"; };
+		979BC14D2213940F00FCD723 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		979BC14F2213AA7000FCD723 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		979BC1512213B12200FCD723 /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseBridge.swift; sourceTree = "<group>"; };
-		97A1945F21FF7CDB00A5B3E7 /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
-		97A1946121FF7CE100A5B3E7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		97A1945F21FF7CDB00A5B3E7 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		9D4E206C4C88CE80A1E2B894 /* Pods_ProjUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD91D600DF5B75213A87B154 /* Pods_ProjTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C423663BB1B7762D07E80A93 /* Pods-Proj.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Proj.release.xcconfig"; path = "Pods/Target Support Files/Pods-Proj/Pods-Proj.release.xcconfig"; sourceTree = "<group>"; };
-		DC3366E122113C17009D98C2 /* mainPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mainPostViewController.swift; sourceTree = "<group>"; };
+		DC3366E122113C17009D98C2 /* MainPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPostViewController.swift; sourceTree = "<group>"; };
 		DC3366E322113C4A009D98C2 /* FollowUsersTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUsersTableTableViewController.swift; sourceTree = "<group>"; };
 		E72D5F0BCBECCA7DD3392826 /* Pods_Proj.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Proj.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECE6DB20EC8F4BD79C5176BB /* Pods-Proj.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Proj.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Proj/Pods-Proj.debug.xcconfig"; sourceTree = "<group>"; };
@@ -149,21 +157,25 @@
 		978C569321E7B88800F5B471 /* Proj */ = {
 			isa = PBXGroup;
 			children = (
-				4C077B6821FD1CC400B01A9F /* GoogleService-Info.plist */,
 				978C569421E7B88800F5B471 /* AppDelegate.swift */,
-				97A1946121FF7CE100A5B3E7 /* ProfileViewController.swift */,
-				DC3366E122113C17009D98C2 /* mainPostViewController.swift */,
-				97A1945F21FF7CDB00A5B3E7 /* UserInfoViewController.swift */,
+				978C569E21E7B88A00F5B471 /* Assets.xcassets */,
 				97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */,
 				DC3366E322113C4A009D98C2 /* FollowUsersTableTableViewController.swift */,
-				978C569821E7B88800F5B471 /* Main.storyboard */,
-				978C569E21E7B88A00F5B471 /* Assets.xcassets */,
-				978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */,
+				979BC14922136FF400FCD723 /* ForgetPassViewController.swift */,
+				4C077B6821FD1CC400B01A9F /* GoogleService-Info.plist */,
 				978C56A321E7B88A00F5B471 /* Info.plist */,
+				978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */,
+				979BC1512213B12200FCD723 /* FollowingViewController.swift */,
+				978C569821E7B88800F5B471 /* Main.storyboard */,
+				979BC14F2213AA7000FCD723 /* TabBarController.swift */,
+				DC3366E122113C17009D98C2 /* MainPostViewController.swift */,
+				97A1945F21FF7CDB00A5B3E7 /* ProfileTableViewController.swift */,
+				979BC14D2213940F00FCD723 /* ProfileViewController.swift */,
 				978C569B21E7B88800F5B471 /* Proj.xcdatamodeld */,
+				979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */,
+				979BC1442212877600FCD723 /* SearchViewController.swift */,
 				4C077B6C21FD20C900B01A9F /* SignInViewController.swift */,
 				4CD1083421FD2D1B0067408C /* SignUpViewController.swift */,
-				979BC1442212877600FCD723 /* SearchViewController.swift */,
 			);
 			path = Proj;
 			sourceTree = "<group>";
@@ -438,14 +450,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				978C569521E7B88800F5B471 /* AppDelegate.swift in Sources */,
+				979BC1502213AA7000FCD723 /* TabBarController.swift in Sources */,
 				DC3366E422113C4A009D98C2 /* FollowUsersTableTableViewController.swift in Sources */,
-				DC3366E222113C17009D98C2 /* mainPostViewController.swift in Sources */,
-				97A1946021FF7CDB00A5B3E7 /* UserInfoViewController.swift in Sources */,
+				DC3366E222113C17009D98C2 /* MainPostViewController.swift in Sources */,
+				97A1946021FF7CDB00A5B3E7 /* ProfileTableViewController.swift in Sources */,
 				4C077B6D21FD20C900B01A9F /* SignInViewController.swift in Sources */,
 				4CD1083521FD2D1B0067408C /* SignUpViewController.swift in Sources */,
-				97A1946221FF7CE100A5B3E7 /* ProfileViewController.swift in Sources */,
 				978C569D21E7B88800F5B471 /* Proj.xcdatamodeld in Sources */,
+				979BC14C22136FFB00FCD723 /* ResetPassViewController.swift in Sources */,
 				97A1945021FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */,
+				979BC14E2213940F00FCD723 /* ProfileViewController.swift in Sources */,
+				979BC14A22136FF400FCD723 /* ForgetPassViewController.swift in Sources */,
+				979BC1522213B12200FCD723 /* FollowingViewController.swift in Sources */,
 				979BC1452212877600FCD723 /* SearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,7 +641,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NC33XT8VR2;
 				INFOPLIST_FILE = Proj/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -644,7 +660,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NC33XT8VR2;
 				INFOPLIST_FILE = Proj/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

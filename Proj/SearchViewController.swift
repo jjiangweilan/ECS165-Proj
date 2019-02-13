@@ -10,6 +10,7 @@ import UIKit
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
     /*Support type*/
+    @IBOutlet weak var seachedUserName: UILabel!
     enum SearchType {
         case USER, CONTENT, PLACE
     }
@@ -35,7 +36,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         case .USER:
             
             DatabaseBridge.queryUserInfo(byEmail: searchBar.text ?? "") { (snapshot) in
-                
+
                 if let userInfo = snapshot.value as? Dictionary<String, Dictionary<String, String>> {
                     
                     self.displaySearchedUserInfo(userInfo: userInfo.values.first!)
@@ -51,11 +52,20 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func displaySearchedUserInfo(userInfo : Dictionary<String, String>) {
-        print(userInfo)
+        seachedUserName.text = userInfo["username"]
     }
     
     func displaySeachNotFoundAlert() {
+        seachedUserName.text = "Label"
+        let alert = UIAlertController(title: "User didn't find", message: nil, preferredStyle: .alert)
         
+        let okAction = UIAlertAction(title: "ok", style: .cancel) { (alertAction) in
+            alert.dismiss(animated: true, completion: nil)
+        }
+        
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+
     }
     /*
      

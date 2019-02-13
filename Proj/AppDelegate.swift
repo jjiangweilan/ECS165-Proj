@@ -23,6 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         DatabaseBridge.initRef()
         
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if let _ = user {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+                self.window?.rootViewController?.present(controller, animated: true, completion: nil)
+            } else {
+                // No user is signed in.
+            }
+        }
         return true
     }
 
