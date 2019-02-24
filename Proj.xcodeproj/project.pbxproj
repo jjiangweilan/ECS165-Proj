@@ -14,6 +14,7 @@
 		4C077B6B21FD1CC400B01A9F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C077B6821FD1CC400B01A9F /* GoogleService-Info.plist */; };
 		4C077B6D21FD20C900B01A9F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C077B6C21FD20C900B01A9F /* SignInViewController.swift */; };
 		4CD1083521FD2D1B0067408C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1083421FD2D1B0067408C /* SignUpViewController.swift */; };
+		978C515622227EEE00930A04 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C515522227EEE00930A04 /* PostViewController.swift */; };
 		978C569521E7B88800F5B471 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C569421E7B88800F5B471 /* AppDelegate.swift */; };
 		978C569A21E7B88800F5B471 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 978C569821E7B88800F5B471 /* Main.storyboard */; };
 		978C569D21E7B88800F5B471 /* Proj.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 978C569B21E7B88800F5B471 /* Proj.xcdatamodeld */; };
@@ -31,6 +32,8 @@
 		97A1945121FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */; };
 		97A1945221FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */; };
 		97A1946021FF7CDB00A5B3E7 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A1945F21FF7CDB00A5B3E7 /* ProfileTableViewController.swift */; };
+		97F3E61D22222912005D7EA4 /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F3E61C22222912005D7EA4 /* PostTableViewController.swift */; };
+		97F3E61F2222609F005D7EA4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F3E61E2222609F005D7EA4 /* Post.swift */; };
 		CF53F0FD37C7ECA8BA0400B2 /* Pods_ProjTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD91D600DF5B75213A87B154 /* Pods_ProjTests.framework */; };
 		DC3366E222113C17009D98C2 /* MainPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3366E122113C17009D98C2 /* MainPostViewController.swift */; };
 		DC3366E422113C4A009D98C2 /* FollowUsersTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3366E322113C4A009D98C2 /* FollowUsersTableTableViewController.swift */; };
@@ -59,6 +62,7 @@
 		4CD1083421FD2D1B0067408C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		7A2287D422B5332904C56392 /* Pods-ProjUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProjUITests/Pods-ProjUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		90C770970EF6AC83E756A520 /* Pods-ProjTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProjTests/Pods-ProjTests.debug.xcconfig"; sourceTree = "<group>"; };
+		978C515522227EEE00930A04 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		978C569121E7B88800F5B471 /* Proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		978C569421E7B88800F5B471 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		978C569921E7B88800F5B471 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -80,6 +84,8 @@
 		979BC1512213B12200FCD723 /* FollowingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingViewController.swift; sourceTree = "<group>"; };
 		97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseBridge.swift; sourceTree = "<group>"; };
 		97A1945F21FF7CDB00A5B3E7 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		97F3E61C22222912005D7EA4 /* PostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewController.swift; sourceTree = "<group>"; };
+		97F3E61E2222609F005D7EA4 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		9D4E206C4C88CE80A1E2B894 /* Pods_ProjUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD91D600DF5B75213A87B154 /* Pods_ProjTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C423663BB1B7762D07E80A93 /* Pods-Proj.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Proj.release.xcconfig"; path = "Pods/Target Support Files/Pods-Proj/Pods-Proj.release.xcconfig"; sourceTree = "<group>"; };
@@ -160,15 +166,17 @@
 				978C569421E7B88800F5B471 /* AppDelegate.swift */,
 				978C569E21E7B88A00F5B471 /* Assets.xcassets */,
 				97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */,
+				979BC1512213B12200FCD723 /* FollowingViewController.swift */,
 				DC3366E322113C4A009D98C2 /* FollowUsersTableTableViewController.swift */,
 				979BC14922136FF400FCD723 /* ForgetPassViewController.swift */,
 				4C077B6821FD1CC400B01A9F /* GoogleService-Info.plist */,
 				978C56A321E7B88A00F5B471 /* Info.plist */,
 				978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */,
-				979BC1512213B12200FCD723 /* FollowingViewController.swift */,
 				978C569821E7B88800F5B471 /* Main.storyboard */,
-				979BC14F2213AA7000FCD723 /* TabBarController.swift */,
+				978C515522227EEE00930A04 /* PostViewController.swift */,
 				DC3366E122113C17009D98C2 /* MainPostViewController.swift */,
+				97F3E61E2222609F005D7EA4 /* Post.swift */,
+				97F3E61C22222912005D7EA4 /* PostTableViewController.swift */,
 				97A1945F21FF7CDB00A5B3E7 /* ProfileTableViewController.swift */,
 				979BC14D2213940F00FCD723 /* ProfileViewController.swift */,
 				978C569B21E7B88800F5B471 /* Proj.xcdatamodeld */,
@@ -176,6 +184,7 @@
 				979BC1442212877600FCD723 /* SearchViewController.swift */,
 				4C077B6C21FD20C900B01A9F /* SignInViewController.swift */,
 				4CD1083421FD2D1B0067408C /* SignUpViewController.swift */,
+				979BC14F2213AA7000FCD723 /* TabBarController.swift */,
 			);
 			path = Proj;
 			sourceTree = "<group>";
@@ -452,6 +461,7 @@
 				978C569521E7B88800F5B471 /* AppDelegate.swift in Sources */,
 				979BC1502213AA7000FCD723 /* TabBarController.swift in Sources */,
 				DC3366E422113C4A009D98C2 /* FollowUsersTableTableViewController.swift in Sources */,
+				978C515622227EEE00930A04 /* PostViewController.swift in Sources */,
 				DC3366E222113C17009D98C2 /* MainPostViewController.swift in Sources */,
 				97A1946021FF7CDB00A5B3E7 /* ProfileTableViewController.swift in Sources */,
 				4C077B6D21FD20C900B01A9F /* SignInViewController.swift in Sources */,
@@ -459,6 +469,8 @@
 				978C569D21E7B88800F5B471 /* Proj.xcdatamodeld in Sources */,
 				979BC14C22136FFB00FCD723 /* ResetPassViewController.swift in Sources */,
 				97A1945021FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */,
+				97F3E61D22222912005D7EA4 /* PostTableViewController.swift in Sources */,
+				97F3E61F2222609F005D7EA4 /* Post.swift in Sources */,
 				979BC14E2213940F00FCD723 /* ProfileViewController.swift in Sources */,
 				979BC14A22136FF400FCD723 /* ForgetPassViewController.swift in Sources */,
 				979BC1522213B12200FCD723 /* FollowingViewController.swift in Sources */,
