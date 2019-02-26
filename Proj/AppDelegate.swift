@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         DatabaseBridge.initRef()
         
+        
         Auth.auth().addStateDidChangeListener { auth, user in
             if let _ = user {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

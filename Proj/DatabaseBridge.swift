@@ -10,15 +10,16 @@ import Foundation
 import Firebase
 import FirebaseDatabase
 
-
 class DatabaseBridge {
     static var ref : DatabaseReference!
+    static var storageRef : StorageReference!
     static func initRef() {
         if let _ = ref {
 
         }
         else {
             ref = Database.database().reference()
+            storageRef = Storage.storage().reference()
         }
     }
     
@@ -88,4 +89,28 @@ class DatabaseBridge {
         }
     }
     
+    static func updateData(path : String, data : Any) {
+        ref.child(path).setValue(data)
+    }
+    
+    static func uploadImage(postID : String, imageData : Data) {
+        let imageRef = storageRef.child("images/\(postID)")
+    
+        imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                // Uh-oh, an error occurred!
+                return
+            }
+            // Metadata contains file metadata such as size, content-type.
+//            let size = metadata.size
+            // You can also access to download URL after upload.
+//            riversRef.downloadURL { (url, error) in
+//                guard let downloadURL = url else {
+//                    // Uh-oh, an error occurred!
+//                    return
+//                }
+//            }
+        }
+        
+    }
 }

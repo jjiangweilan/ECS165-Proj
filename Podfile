@@ -11,6 +11,7 @@ target 'Proj' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'FirebaseUI/Facebook'
+  pod 'Firebase/Storage'
   pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
   target 'ProjTests' do

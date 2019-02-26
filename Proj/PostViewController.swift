@@ -13,11 +13,9 @@ import Firebase
 class PostViewController: UIViewController,
 UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
-    
- 
     @IBOutlet weak var photoPost: UIButton!
     @IBOutlet weak var libraryPost: UIButton!
-
+    
     @IBOutlet weak var imageChoose: UIImageView!
     @IBOutlet weak var textContent: UITextView!
     
@@ -83,8 +81,25 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
     @IBAction func handlePost(_ sender: Any) {
+        let content = textContent.text
+        let postTime = uint(NSDate().timeIntervalSince1970)
+        let userID = Auth.auth().currentUser!.uid
+        let likes : [Int : String]? = nil
+        let postID = "\(Auth.auth().currentUser!.uid)_\(postTime)"
+        let postData : [String : Any] = [
+            "userID" : userID,
+            "content" : content ?? "",
+            "time" : postTime,
+            "likes" : "",
+            ]
         
-        //Database update
+        DatabaseBridge.updateData(path: "posts/\(postID)", data: postData)
+        
+        if let imageData = imageChoose.image?.pngData() {
+            DatabaseBridge.uploadImage(postID: postID, imageData: imageData) //image data is stored in storage
+        }
+        
+        //After Post
     }
     
 //    override func viewDidLoad() {

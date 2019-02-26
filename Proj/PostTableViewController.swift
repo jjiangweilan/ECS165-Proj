@@ -34,12 +34,15 @@ class PostTableViewController: UITableViewController {
         let imageView = cell.contentView.viewWithTag(1) as! UIImageView
         imageView.image = postArr[indexPath.section].image
         
-        let labelView = cell.contentView.viewWithTag(2) as! UILabel
-        labelView.text = postArr[indexPath.section].text
-        labelView.sizeToFit()
+        let contentView = cell.contentView.viewWithTag(2) as! UILabel
+        contentView.text = postArr[indexPath.section].text
+        contentView.sizeToFit()
         
         let profilePic = cell.contentView.viewWithTag(3) as! UIImageView
         profilePic.image = postArr[indexPath.section].profilePic
+        
+        let postUserName = cell.contentView.viewWithTag(4) as! UILabel
+        postUserName.text = postArr[indexPath.section].userName
         
         return cell
     }
@@ -48,8 +51,8 @@ class PostTableViewController: UITableViewController {
         var postArr = [Post]()
         
         //dumb data
-//        postArr.append(Post(text: "this tastes very good ohhhhhhhhh\n lalallalala", image: UIImage(named : "chinese") ?? UIImage()));
-//        postArr.append(Post(text: "this tastes very good ohhhhhhhhh\n lalallalala\n aaaaaaa", image: UIImage(named : "japanese") ?? UIImage()));
+        postArr.append(Post(userName: "Jiehong", profilePic: UIImage(), text: "this tastes very good ohhhhhhhhh\n lalallalala", image: UIImage(named : "chinese") ?? UIImage(), likes: [("Jiyun", "dwafewewad")]));
+        postArr.append(Post(userName: "Zexu", profilePic: UIImage(), text: "this tastes very good ohhhhhhhhh\n lalallalala\n aaaaaaa", image: UIImage(named : "japanese") ?? UIImage(), likes: [("Jiehong", "2ewdw222")]));
         return postArr
     }
     
