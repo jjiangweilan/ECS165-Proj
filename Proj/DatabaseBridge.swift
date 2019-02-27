@@ -64,7 +64,7 @@ class DatabaseBridge {
     }
     
     static func searchUser(userName : String, callback : @escaping (DataSnapshot) -> Void) {
-        ref.child("users").queryOrdered(byChild: "username").queryEqual(toValue: userName).observeSingleEvent(of: DataEventType.value, with: callback)
+        ref.child("users").queryOrdered(byChild: "username").queryStarting(atValue: userName).queryEnding(atValue: "\(userName)" + "\u{f8ff}").observeSingleEvent(of: DataEventType.value, with: callback)
         /*{ (snapshot) in
          let userInfo = snapshot.value as? [String : AnyObject] ?? [:]
          }*/
@@ -93,8 +93,8 @@ class DatabaseBridge {
         ref.child(path).setValue(data)
     }
     
-    static func uploadImage(postID : String, imageData : Data) {
-        let imageRef = storageRef.child("images/\(postID)")
+    static func uploadImage(userID : String, timeStampAsPostID : uint, imageData : Data) {
+        let imageRef = storageRef.child("images/\(userID)/\(timeStampAsPostID)")
     
         imageRef.putData(imageData, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
@@ -111,6 +111,5 @@ class DatabaseBridge {
 //                }
 //            }
         }
-        
     }
 }

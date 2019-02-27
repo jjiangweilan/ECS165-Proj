@@ -22,6 +22,7 @@
 		978C56A221E7B88A00F5B471 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */; };
 		978C56AD21E7B88A00F5B471 /* ProjTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56AC21E7B88A00F5B471 /* ProjTests.swift */; };
 		978C56B821E7B88A00F5B471 /* ProjUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56B721E7B88A00F5B471 /* ProjUITests.swift */; };
+		978F24F522262F14006FD7A8 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978F24F422262F14006FD7A8 /* TableViewCell.swift */; };
 		979BC1452212877600FCD723 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC1442212877600FCD723 /* SearchViewController.swift */; };
 		979BC14A22136FF400FCD723 /* ForgetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14922136FF400FCD723 /* ForgetPassViewController.swift */; };
 		979BC14C22136FFB00FCD723 /* ResetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */; };
@@ -78,6 +79,7 @@
 		978C56B321E7B88A00F5B471 /* ProjUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProjUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		978C56B721E7B88A00F5B471 /* ProjUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjUITests.swift; sourceTree = "<group>"; };
 		978C56B921E7B88A00F5B471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		978F24F422262F14006FD7A8 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		979BC1442212877600FCD723 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		979BC14922136FF400FCD723 /* ForgetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPassViewController.swift; sourceTree = "<group>"; };
 		979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPassViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		978C569321E7B88800F5B471 /* Proj */ = {
 			isa = PBXGroup;
 			children = (
+				978F24F422262F14006FD7A8 /* TableViewCell.swift */,
 				978C569421E7B88800F5B471 /* AppDelegate.swift */,
 				978C569E21E7B88A00F5B471 /* Assets.xcassets */,
 				97A1944F21FD94C900A5B3E7 /* DatabaseBridge.swift */,
@@ -490,6 +493,7 @@
 				978C569521E7B88800F5B471 /* AppDelegate.swift in Sources */,
 				979BC1502213AA7000FCD723 /* TabBarController.swift in Sources */,
 				DC3366E422113C4A009D98C2 /* FollowUsersTableTableViewController.swift in Sources */,
+				978F24F522262F14006FD7A8 /* TableViewCell.swift in Sources */,
 				978C515622227EEE00930A04 /* PostViewController.swift in Sources */,
 				DC3366E222113C17009D98C2 /* MainPostViewController.swift in Sources */,
 				97A1946021FF7CDB00A5B3E7 /* ProfileTableViewController.swift in Sources */,

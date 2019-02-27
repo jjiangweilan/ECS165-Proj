@@ -84,19 +84,18 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
         let content = textContent.text
         let postTime = uint(NSDate().timeIntervalSince1970)
         let userID = Auth.auth().currentUser!.uid
-        let likes : [Int : String]? = nil
-        let postID = "\(Auth.auth().currentUser!.uid)_\(postTime)"
+        //let likes : [Int : String]? = nil
         let postData : [String : Any] = [
             "userID" : userID,
             "content" : content ?? "",
-            "time" : postTime,
+            "timeStamp" : postTime,
             "likes" : "",
             ]
         
-        DatabaseBridge.updateData(path: "posts/\(postID)", data: postData)
+        DatabaseBridge.updateData(path: "posts/\(userID)/\(postTime)", data: postData)
         
         if let imageData = imageChoose.image?.pngData() {
-            DatabaseBridge.uploadImage(postID: postID, imageData: imageData) //image data is stored in storage
+            DatabaseBridge.uploadImage(userID: userID, timeStampAsPostID: postTime, imageData: imageData) //image data is stored in storage
         }
         
         //After Post
