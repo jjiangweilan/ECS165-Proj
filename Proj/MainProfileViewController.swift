@@ -7,24 +7,78 @@
 //
 
 import UIKit
-
-class ___ViewController: UIViewController {
-
+import Firebase
+class MainProfileViewController: UIViewController {
+    enum MainProfileViewMode {
+        case ObserveMode, ProfileMode
+    }
+    
+    var observingID : String! = nil
+    
+    @IBOutlet weak var modeButton : UIButton!
+    @IBOutlet weak var followerCount : UILabel!
+    @IBOutlet weak var followingCount : UILabel!
+    @IBOutlet weak var postCount : UILabel!
+    
+    var mode : MainProfileViewMode = .ObserveMode
+    
+    var posts : [String : Any]?
+    var following : [String : uint]?
+    var follower : [String : uint]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func changeToObserveView(observingID : String) {
+        mode = .ObserveMode
+        
+        self.observingID = observingID
+        
+        DatabaseBridge.databaseHas(path: "following/\(Auth.auth().currentUser!.uid)/\(observingID)", hasCallback: {
+            self.modeButton.titleLabel?.text = "Followed"
+            self.modeButton.isUserInteractionEnabled = false
+            
+        }, hasNotCallback: {
+            self.modeButton.titleLabel?.text = "Follow"
+            self.modeButton.isUserInteractionEnabled = true
+        })
     }
-    */
+    
+    func changeToProfileView() {
+        mode = .ProfileMode
+        modeButton.titleLabel?.text = "Edit Profile"
+    }
+    
+    @IBAction func modeButtonClicked(sender : Any) {
+        switch mode {
+        case .ObserveMode:
+            DatabaseBridge.followUser(followingID: self.observingID)
+        case .ProfileMode:
+            print(123)
+        }
+    }
+    
+    func loadProfileData() {
+        DatabaseBridge.getFollower { (snapshot) in
+            self.follower = snapshot.value as? [String : uint]
+            if let _ = self.follower {}
+            else {
+                self.follower = [String : uint]()
+            }
+            self.followerCount.text = "\(self.follower!.count)"
+        }
+        
+        DatabaseBridge.getFollowing { (snapshot) in
+            self.following = snapshot.value as? [String : uint]
+            if let _ = self.follower {}
+            else {
+                self.following = [String : uint]()
+            }
+            self.followingCount.text = "\(self.following!.count)"
+        }
+    }
 
 }

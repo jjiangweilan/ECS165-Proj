@@ -93,7 +93,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
             ]
         
         DatabaseBridge.updateData(path: "posts/\(userID)/\(postTime)", data: postData)
-        
+        DatabaseBridge.updateData(path: "users/\(userID)/lastPost", data: postTime)
         if let imageData = imageChoose.image?.pngData() {
             DatabaseBridge.uploadImage(userID: userID, timeStampAsPostID: postTime, imageData: imageData) //image data is stored in storage
         }

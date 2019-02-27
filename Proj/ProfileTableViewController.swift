@@ -133,5 +133,7 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
         self.present(chooseAction, animated: true, completion: nil)
     }
     
-    
+    @IBAction func dismiss() {
+        dismiss(animated: true, completion: nil)
+    }
 }

@@ -12,10 +12,11 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 
 class ProfileViewController: UIViewController {
-
+    @IBOutlet weak var profileContainer : UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     

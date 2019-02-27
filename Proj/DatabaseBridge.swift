@@ -118,15 +118,20 @@ class DatabaseBridge {
                 // Uh-oh, an error occurred!
                 return
             }
-            // Metadata contains file metadata such as size, content-type.
-//            let size = metadata.size
-            // You can also access to download URL after upload.
-//            riversRef.downloadURL { (url, error) in
-//                guard let downloadURL = url else {
-//                    // Uh-oh, an error occurred!
-//                    return
-//                }
-//            }
         }
+    }
+    
+    static func followUser(followingID : String) {
+        let time = uint(NSDate().timeIntervalSince1970)
+        ref.child("follow/\(Auth.auth().currentUser!.uid)/following/\(followingID)").setValue(time)
+        ref.child("follow/\(followingID)/follower/\(Auth.auth().currentUser!.uid)").setValue(time)
+    }
+    
+    static func getFollowing(callback : @escaping (DataSnapshot) -> Void) {
+        ref.child("follow/\(Auth.auth().currentUser!.uid)/following").observeSingleEvent(of: .value, with: callback)
+    }
+    
+    static func getFollower(callback : @escaping (DataSnapshot) -> Void) {
+        ref.child("follow/\(Auth.auth().currentUser!.uid)/follower").observeSingleEvent(of: .value, with: callback)
     }
 }

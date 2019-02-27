@@ -71,7 +71,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
      }
      */
     
-    
     // implement search bar
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let searchText = searchBar.text!;
@@ -94,19 +93,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     // search by user name and tag
     // need to use firebase API
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        /*
-         switch selectedScope {
-         // search by user name
-         case 0:
-         // find users from firebase
-         currentUserArray = findUser()
-         })
-         // search by tag
-         case 1:
-         // find tag content from firebase
-         currentUserArray = findTagContent()
-         }
-         */
+        
     }
     
     

@@ -440,9 +440,6 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAx-b8-XrL">
                                 <rect key="frame" x="0.0" y="44" width="375" height="631"/>
-                                <connections>
-                                    <segue destination="kw3-bn-gUt" kind="embed" id="Gxf-Dq-1cb"/>
-                                </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2n-Mx-iNt">
                                 <rect key="frame" x="0.0" y="675" width="375" height="54"/>
@@ -478,10 +475,10 @@
             </objects>
             <point key="canvasLocation" x="1607" y="1377"/>
         </scene>
-        <!--View Controller-->
+        <!--Main Profile View Controller-->
         <scene sceneID="X9C-rg-GvQ">
             <objects>
-                <viewController id="GJn-RD-bZ4" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainProfile" id="GJn-RD-bZ4" customClass="MainProfileViewController" customModule="Proj" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GBp-JE-0II">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -617,7 +614,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FBX-HH-gtf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3369" y="1644"/>
+            <point key="canvasLocation" x="3359" y="1617"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="sEm-YE-N5I">
@@ -800,7 +797,7 @@
             <objects>
                 <tableViewController id="kw3-bn-gUt" customClass="ProfileTableViewController" customModule="Proj" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="flf-ai-c9T">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="631"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1088,7 +1085,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2630" y="1353"/>
+            <point key="canvasLocation" x="2394" y="1666"/>
         </scene>
         <!--Forget Pass View Controller-->
         <scene sceneID="tVk-66-tQd">
