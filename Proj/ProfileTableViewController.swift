@@ -90,6 +90,7 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
         let actionConfirm = UIAlertAction(title: "Yes", style: .default) { (_) in
             let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
             self.profilePhoto.image = image
+            DatabaseBridge.uploadProfilePic(userID: Auth.auth().currentUser!.uid, imageData: image.pngData()!)
             picker.dismiss(animated: true, completion: nil)
             
 //            if let base64 = image.jpegData(compressionQuality: 0.1)?.base64EncodedString() {
@@ -122,10 +123,13 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
         let chooseAction = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
         let chooseCamera = UIAlertAction(title: "Camera", style: .default, handler: openCamera)
         let chooseGallery = UIAlertAction(title: "Gallery", style: .default, handler: openGallery)
+        let actionNope = UIAlertAction(title: "Dismiss", style: .destructive) { (_) in
+            chooseAction.dismiss(animated: true, completion: nil)
+        }
         
         chooseAction.addAction(chooseCamera)
         chooseAction.addAction(chooseGallery)
-        
+        chooseAction.addAction(actionNope)
         self.present(chooseAction, animated: true, completion: nil)
     }
     

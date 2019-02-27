@@ -478,10 +478,10 @@
             </objects>
             <point key="canvasLocation" x="1607" y="1377"/>
         </scene>
-        <!--Main Post View Controller-->
+        <!--View Controller-->
         <scene sceneID="X9C-rg-GvQ">
             <objects>
-                <viewController id="GJn-RD-bZ4" customClass="MainPostViewController" customModule="Proj" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="GJn-RD-bZ4" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GBp-JE-0II">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1337,7 +1337,7 @@
         <scene sceneID="BVt-bo-piD">
             <objects>
                 <viewController id="FfE-2g-7Z7" customClass="SignInViewController" customModule="Proj" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hVt-Gi-RqV">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="hVt-Gi-RqV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

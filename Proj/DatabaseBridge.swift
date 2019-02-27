@@ -93,6 +93,23 @@ class DatabaseBridge {
         ref.child(path).setValue(data)
     }
     
+    static func uploadProfilePic(userID : String, imageData : Data) {
+        let profileRef = storageRef.child("profilePicture/\(userID)")
+        
+        profileRef.putData(imageData, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                // Uh-oh, an error occurred!
+                return
+            }
+        }
+    }
+    
+    static func getProfilePic(userID : String, callback : @escaping (Data?, Error?) -> Void) {
+        let profileRef = storageRef.child("profilePicture/\(userID)")
+        
+        profileRef.getData(maxSize: 20 * 1024 * 1024, completion: callback)
+    }
+    
     static func uploadImage(userID : String, timeStampAsPostID : uint, imageData : Data) {
         let imageRef = storageRef.child("images/\(userID)/\(timeStampAsPostID)")
     
