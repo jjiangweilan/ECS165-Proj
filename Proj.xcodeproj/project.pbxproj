@@ -23,6 +23,7 @@
 		978C56AD21E7B88A00F5B471 /* ProjTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56AC21E7B88A00F5B471 /* ProjTests.swift */; };
 		978C56B821E7B88A00F5B471 /* ProjUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56B721E7B88A00F5B471 /* ProjUITests.swift */; };
 		978F24F522262F14006FD7A8 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978F24F422262F14006FD7A8 /* TableViewCell.swift */; };
+		978F24F7222648BD006FD7A8 /* MainProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978F24F6222648BD006FD7A8 /* MainProfileViewController.swift */; };
 		979BC1452212877600FCD723 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC1442212877600FCD723 /* SearchViewController.swift */; };
 		979BC14A22136FF400FCD723 /* ForgetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14922136FF400FCD723 /* ForgetPassViewController.swift */; };
 		979BC14C22136FFB00FCD723 /* ResetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */; };
@@ -80,6 +81,7 @@
 		978C56B721E7B88A00F5B471 /* ProjUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjUITests.swift; sourceTree = "<group>"; };
 		978C56B921E7B88A00F5B471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		978F24F422262F14006FD7A8 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		978F24F6222648BD006FD7A8 /* MainProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainProfileViewController.swift; sourceTree = "<group>"; };
 		979BC1442212877600FCD723 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		979BC14922136FF400FCD723 /* ForgetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPassViewController.swift; sourceTree = "<group>"; };
 		979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPassViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				979BC14922136FF400FCD723 /* ForgetPassViewController.swift */,
 				4C077B6821FD1CC400B01A9F /* GoogleService-Info.plist */,
 				978C56A321E7B88A00F5B471 /* Info.plist */,
+				978F24F6222648BD006FD7A8 /* MainProfileViewController.swift */,
 				978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */,
 				978C569821E7B88800F5B471 /* Main.storyboard */,
 				978C515522227EEE00930A04 /* PostViewController.swift */,
@@ -502,6 +505,7 @@
 				978C569D21E7B88800F5B471 /* Proj.xcdatamodeld in Sources */,
 				979BC14C22136FFB00FCD723 /* ResetPassViewController.swift in Sources */,
 				97A1945021FD94C900A5B3E7 /* DatabaseBridge.swift in Sources */,
+				978F24F7222648BD006FD7A8 /* MainProfileViewController.swift in Sources */,
 				97F3E61D22222912005D7EA4 /* PostTableViewController.swift in Sources */,
 				97F3E61F2222609F005D7EA4 /* Post.swift in Sources */,
 				979BC14E2213940F00FCD723 /* ProfileViewController.swift in Sources */,

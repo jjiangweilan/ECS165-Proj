@@ -82,7 +82,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         var searchText = searchBar.text!;
         
         DatabaseBridge.searchUser(userName: searchText) { (snapshot) in
-            print(snapshot.value.debugDescription)
+            let userInfo = snapshot.value as? [String : AnyObject] ?? [:]
         }
         
         table.reloadData()

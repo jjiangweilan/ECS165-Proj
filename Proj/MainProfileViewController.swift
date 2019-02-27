@@ -1,27 +1,14 @@
 //
-//  followingViewController.swift
+//  !@#ViewController.swift
 //  Proj
 //
-//  Created by Xiaofang Jiang on 2/12/19.
+//  Created by Zexu Li on 2/26/19.
 //  Copyright © 2019 jiehong jiang. All rights reserved.
 //
 
 import UIKit
 
-class FollowingViewController: UIViewController {
-    
-    @IBOutlet weak var followButton: UIButton!
-    
-    @IBOutlet weak var searchedName: UILabel!
-    @IBAction func followingStarts(_ sender: Any) {
-        if followButton.currentTitle == "Follow"{
-            followButton.setTitle("Following", for: .normal)
-            followButton.tintColor = UIColor.blue
-        }
-        else{
-            followButton.setTitle("Follow",for: .normal)
-        }
-    }
+class ___ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
