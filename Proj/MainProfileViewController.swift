@@ -19,6 +19,7 @@ class MainProfileViewController: UIViewController {
     @IBOutlet weak var followerCount : UILabel!
     @IBOutlet weak var followingCount : UILabel!
     @IBOutlet weak var postCount : UILabel!
+    @IBOutlet weak var profilePic : UIImageView!
     
     var mode : MainProfileViewMode = .ObserveMode
     
@@ -28,7 +29,16 @@ class MainProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        profilePic.layer.borderWidth = 1
+        profilePic.layer.masksToBounds = false
+        profilePic.layer.borderColor = UIColor.black.cgColor
+        profilePic.layer.cornerRadius = profilePic.frame.height/2
+        profilePic.clipsToBounds = true
+        DatabaseBridge.getProfilePic(userID: Auth.auth().currentUser!.uid) { (data, error) in
+            if let imageData = data {
+                self.profilePic.image = UIImage(data: data!)
+            }
+        }
         // Do any additional setup after loading the view.
     }
     

@@ -96,11 +96,26 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
         DatabaseBridge.updateData(path: "users/\(userID)/lastPost", data: postTime)
         if let imageData = imageChoose.image?.pngData() {
             DatabaseBridge.uploadImage(userID: userID, timeStampAsPostID: postTime, imageData: imageData) //image data is stored in storage
+            self.displayAlert(userMessage: "Posted")
         }
-        
-        //After Post
+    
     }
     
+    func displayAlert(userMessage:String, okAction : (() -> Void)? = nil) -> Void {
+        DispatchQueue.main.async
+            {
+                let alertController = UIAlertController(title: "Alert", message: userMessage, preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default)
+                { (action:UIAlertAction!) in
+                    if let action = okAction {
+                        action()
+                    }
+                }
+                alertController.addAction(OKAction)
+                self.present(alertController,animated: true, completion: nil)
+                
+        }
+    }
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
 //

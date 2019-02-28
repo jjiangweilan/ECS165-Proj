@@ -47,7 +47,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         return currentUserArray.count
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? TableViewCell else {
             return UITableViewCell()
@@ -107,8 +106,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             self.introduction = introduction
             self.image = image
         }
-        
-        
     }
     
     

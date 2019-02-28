@@ -23,6 +23,18 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        profilePhoto.layer.borderWidth = 1
+        profilePhoto.layer.masksToBounds = false
+        profilePhoto.layer.borderColor = UIColor.black.cgColor
+        profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
+        profilePhoto.clipsToBounds = true
+        
+        DatabaseBridge.getProfilePic(userID: Auth.auth().currentUser!.uid) { (data, error) in
+            if let imageData = data {
+                self.profilePhoto.image = UIImage(data: data!)
+            }
+        }
+        
         DatabaseBridge.getUserInfo(snapshotFunc: { (snapshot) in
             
             let value = snapshot.value as? NSDictionary

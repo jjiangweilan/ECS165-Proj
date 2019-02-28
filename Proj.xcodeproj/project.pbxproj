@@ -16,7 +16,6 @@
 		4CD1083521FD2D1B0067408C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1083421FD2D1B0067408C /* SignUpViewController.swift */; };
 		978C515622227EEE00930A04 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C515522227EEE00930A04 /* PostViewController.swift */; };
 		978C569521E7B88800F5B471 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C569421E7B88800F5B471 /* AppDelegate.swift */; };
-		978C569A21E7B88800F5B471 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 978C569821E7B88800F5B471 /* Main.storyboard */; };
 		978C569D21E7B88800F5B471 /* Proj.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 978C569B21E7B88800F5B471 /* Proj.xcdatamodeld */; };
 		978C569F21E7B88A00F5B471 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 978C569E21E7B88A00F5B471 /* Assets.xcassets */; };
 		978C56A221E7B88A00F5B471 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */; };
@@ -24,6 +23,7 @@
 		978C56B821E7B88A00F5B471 /* ProjUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978C56B721E7B88A00F5B471 /* ProjUITests.swift */; };
 		978F24F522262F14006FD7A8 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978F24F422262F14006FD7A8 /* TableViewCell.swift */; };
 		978F24F7222648BD006FD7A8 /* MainProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978F24F6222648BD006FD7A8 /* MainProfileViewController.swift */; };
+		978F253522267261006FD7A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 978F253322267261006FD7A8 /* Main.storyboard */; };
 		979BC1452212877600FCD723 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC1442212877600FCD723 /* SearchViewController.swift */; };
 		979BC14A22136FF400FCD723 /* ForgetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14922136FF400FCD723 /* ForgetPassViewController.swift */; };
 		979BC14C22136FFB00FCD723 /* ResetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */; };
@@ -69,7 +69,6 @@
 		978C51592225B56E00930A04 /* FirebaseDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		978C569121E7B88800F5B471 /* Proj.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proj.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		978C569421E7B88800F5B471 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		978C569921E7B88800F5B471 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		978C569C21E7B88800F5B471 /* Proj.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Proj.xcdatamodel; sourceTree = "<group>"; };
 		978C569E21E7B88A00F5B471 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		978C56A121E7B88A00F5B471 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -82,6 +81,7 @@
 		978C56B921E7B88A00F5B471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		978F24F422262F14006FD7A8 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		978F24F6222648BD006FD7A8 /* MainProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainProfileViewController.swift; sourceTree = "<group>"; };
+		978F253422267261006FD7A8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		979BC1442212877600FCD723 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		979BC14922136FF400FCD723 /* ForgetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPassViewController.swift; sourceTree = "<group>"; };
 		979BC14B22136FFB00FCD723 /* ResetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPassViewController.swift; sourceTree = "<group>"; };
@@ -177,10 +177,10 @@
 				DC3366E322113C4A009D98C2 /* FollowUsersTableTableViewController.swift */,
 				979BC14922136FF400FCD723 /* ForgetPassViewController.swift */,
 				4C077B6821FD1CC400B01A9F /* GoogleService-Info.plist */,
+				978F253322267261006FD7A8 /* Main.storyboard */,
 				978C56A321E7B88A00F5B471 /* Info.plist */,
-				978F24F6222648BD006FD7A8 /* MainProfileViewController.swift */,
 				978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */,
-				978C569821E7B88800F5B471 /* Main.storyboard */,
+				978F24F6222648BD006FD7A8 /* MainProfileViewController.swift */,
 				978C515522227EEE00930A04 /* PostViewController.swift */,
 				DC3366E122113C17009D98C2 /* MainPostViewController.swift */,
 				97F3E61E2222609F005D7EA4 /* Post.swift */,
@@ -339,7 +339,7 @@
 				978C56A221E7B88A00F5B471 /* LaunchScreen.storyboard in Resources */,
 				4C077B6921FD1CC400B01A9F /* GoogleService-Info.plist in Resources */,
 				978C569F21E7B88A00F5B471 /* Assets.xcassets in Resources */,
-				978C569A21E7B88800F5B471 /* Main.storyboard in Resources */,
+				978F253522267261006FD7A8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,20 +549,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		978C569821E7B88800F5B471 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				978C569921E7B88800F5B471 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		978C56A021E7B88A00F5B471 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				978C56A121E7B88A00F5B471 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		978F253322267261006FD7A8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				978F253422267261006FD7A8 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
