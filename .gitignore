@@ -1,8 +1,10 @@
 *
 !Proj.xcodeproj
-!**/Proj
+!Proj/
+!Proj/**
 !Podfile
 !.gitignore
 !README.md
 !LICENSE
+.DS_Store
 GoogleService-Info.plist
