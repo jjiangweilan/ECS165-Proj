@@ -20,12 +20,23 @@ class MainProfileViewController: UIViewController {
     @IBOutlet weak var followingCount : UILabel!
     @IBOutlet weak var postCount : UILabel!
     @IBOutlet weak var profilePic : UIImageView!
+    @IBOutlet weak var fullUserName : UILabel!
     
-    var mode : MainProfileViewMode = .ObserveMode
+    var mode : MainProfileViewMode = .ProfileMode
     
     var posts : [String : Any]?
-    var following : [String : uint]?
-    var follower : [String : uint]?
+    var following : [String]?
+    var follower : [String]?
+    
+    var userData : UserData! = nil
+    var dataBaseHandles : [UInt]! = nil
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        loadProfileData()
+        changeViewData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +45,16 @@ class MainProfileViewController: UIViewController {
         profilePic.layer.borderColor = UIColor.black.cgColor
         profilePic.layer.cornerRadius = profilePic.frame.height/2
         profilePic.clipsToBounds = true
-        DatabaseBridge.getProfilePic(userID: Auth.auth().currentUser!.uid) { (data, error) in
-            if let imageData = data {
-                self.profilePic.image = UIImage(data: data!)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        if let handles = self.dataBaseHandles {
+            for h in handles {
+                DatabaseBridge.stopObserving(handle: h)
             }
         }
-        // Do any additional setup after loading the view.
     }
     
     func changeToObserveView(observingID : String) {
@@ -62,33 +77,51 @@ class MainProfileViewController: UIViewController {
         modeButton.titleLabel?.text = "Edit Profile"
     }
     
-    @IBAction func modeButtonClicked(sender : Any) {
-        switch mode {
-        case .ObserveMode:
-            DatabaseBridge.followUser(followingID: self.observingID)
-        case .ProfileMode:
-            print(123)
+    func loadProfileData() {
+        if (self.mode == .ProfileMode) { // profile
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            self.userData = appDelegate.userData
+            
+            self.modeButton.addTarget(self, action: #selector(self.showEditableUserProfileView), for: .touchUpInside)
+            changeToProfileView()
+        }
+        else { // observe
+            changeToObserveView(observingID: userData.uid)
+            self.modeButton.addTarget(self, action: #selector(self.follow), for: .touchUpInside)
+        }
+        
+        self.follower = self.userData.follower
+        self.following = self.userData.following
+        self.profilePic.image = self.userData.profilePic
+    }
+
+    @objc func showEditableUserProfileView() {
+        let profileView = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileTableViewController") as! ProfileTableViewController
+        
+        self.present(profileView, animated: true, completion: nil)
+    }
+    
+    @objc func follow() {
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        DatabaseBridge.followUser(followingID: self.userData.uid)
+        follower?.append(appDel.userData.userName)
+        
+    }
+    
+    @objc func unfollow() {
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        DatabaseBridge.unfollow(uid: self.userData.uid)
+        let index : Int = appDel.userData.following.firstIndex(of: self.userData.uid) ?? -1
+        if (index != -1) {
+            appDel.userData.following.remove(at: index)
         }
     }
     
-    func loadProfileData() {
-        DatabaseBridge.getFollower { (snapshot) in
-            self.follower = snapshot.value as? [String : uint]
-            if let _ = self.follower {}
-            else {
-                self.follower = [String : uint]()
-            }
-            self.followerCount.text = "\(self.follower!.count)"
-        }
-        
-        DatabaseBridge.getFollowing { (snapshot) in
-            self.following = snapshot.value as? [String : uint]
-            if let _ = self.follower {}
-            else {
-                self.following = [String : uint]()
-            }
-            self.followingCount.text = "\(self.following!.count)"
-        }
+    func changeViewData() {
+        self.postCount.text = "\(self.posts?.count ?? 0)"
+        self.followerCount.text = "\(self.follower?.count ?? 0)"
+        self.followingCount.text = "\(self.following?.count ?? 0)"
+        self.fullUserName.text = "\(self.userData.userName)"
     }
 
 }

@@ -10,12 +10,12 @@ import UIKit
 import Firebase
 import CoreData
 import FBSDKCoreKit
-
+import UserNotifications
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
-    
+    var userData = UserData()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -24,14 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         Auth.auth().addStateDidChangeListener { auth, user in
-            if let _ = user {
+            if let user = user {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController")
                 self.window?.rootViewController?.present(controller, animated: true, completion: nil)
+                
+                UserData.populate(userData: self.userData, userID: user.uid)
             } else {
                 // No user is signed in.
             }
         }
+        
+        UNUserNotificationCenter.current().delegate = self
         return true
     }
 

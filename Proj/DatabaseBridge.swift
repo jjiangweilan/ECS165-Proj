@@ -49,9 +49,8 @@ class DatabaseBridge {
         ref.child("users/\(user.user.uid)").setValue(userDataTemplate)
     }
     
-    static func getUserInfo(snapshotFunc : @escaping (DataSnapshot) -> Void) {
-
-        ref.child("users").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+    static func getUserInfo(snapshotFunc : @escaping (DataSnapshot) -> Void) -> DatabaseHandle {
+        return ref.child("users").child(Auth.auth().currentUser!.uid).observe(.value, with: { (snapshot) in
             snapshotFunc(snapshot)
             
         }) { (error) in
@@ -106,8 +105,8 @@ class DatabaseBridge {
     
     static func getProfilePic(userID : String, callback : @escaping (Data?, Error?) -> Void) {
         let profileRef = storageRef.child("profilePicture/\(userID)")
-        
-        profileRef.getData(maxSize: 20 * 1024 * 1024, completion: callback)
+        callback(nil, nil)
+        //profileRef.getData(maxSize: 20 * 1024 * 1024, completion: callback)
     }
     
     static func uploadImage(userID : String, timeStampAsPostID : uint, imageData : Data) {
@@ -121,17 +120,30 @@ class DatabaseBridge {
         }
     }
     
+    static func getUserPosts(uid : String, snapshotFunc : @escaping (DataSnapshot) -> Void) -> DatabaseHandle {
+        return ref.child("posts/\(uid)").queryOrderedByKey().observe(.value, with: snapshotFunc)
+    }
+    
     static func followUser(followingID : String) {
         let time = uint(NSDate().timeIntervalSince1970)
         ref.child("follow/\(Auth.auth().currentUser!.uid)/following/\(followingID)").setValue(time)
         ref.child("follow/\(followingID)/follower/\(Auth.auth().currentUser!.uid)").setValue(time)
     }
     
-    static func getFollowing(callback : @escaping (DataSnapshot) -> Void) {
-        ref.child("follow/\(Auth.auth().currentUser!.uid)/following").observeSingleEvent(of: .value, with: callback)
+    static func getFollowing(uid : String, callback : @escaping (DataSnapshot) -> Void) ->DatabaseHandle {
+        return ref.child("follow/\(uid)/following").observe(DataEventType.value, with: callback)
     }
     
-    static func getFollower(callback : @escaping (DataSnapshot) -> Void) {
-        ref.child("follow/\(Auth.auth().currentUser!.uid)/follower").observeSingleEvent(of: .value, with: callback)
+    static func getFollower(uid : String, callback : @escaping (DataSnapshot) -> Void) ->DatabaseHandle {
+        return ref.child("follow/\(uid)/follower").observe(DataEventType.value, with: callback)
+    }
+    
+    static func unfollow(uid: String) {
+        ref.child("follow/\(Auth.auth().currentUser!.uid)/following/\(uid)").removeValue()
+        ref.child("follow/\(uid)/follower/\(Auth.auth().currentUser!.uid)").removeValue()
+    }
+    
+    static func stopObserving(handle : DatabaseHandle)  {
+        ref.removeObserver(withHandle: handle)
     }
 }

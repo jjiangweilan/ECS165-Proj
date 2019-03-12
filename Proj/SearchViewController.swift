@@ -28,9 +28,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     // fake save input user info
     private func setUserInfo(){
-    
+        
     }
-    
     
     private func setSearchBar() {
         searchBar.delegate = self
@@ -45,6 +44,18 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     // table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentUserArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let userID = currentUserArray[indexPath.row].uid
+        
+        let mainProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainProfileViewController") as! MainProfileViewController
+        
+        mainProfileViewController.mode = .ObserveMode
+        mainProfileViewController.userData = UserData()
+        mainProfileViewController.dataBaseHandles = UserData.populate(userData: mainProfileViewController.userData, userID: userID)
+        
+        self.present(mainProfileViewController, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -78,10 +89,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             let userInfo = snapshot.value as? [String : AnyObject] ?? [:]
             for user in userInfo {
                 DatabaseBridge.getProfilePic(userID: user.key, callback: { (data, error) in
-                    if let profileData = data {
-                        let userDict = user.value as! [String : Any]
-                        self.currentUserArray.append(User(name: userDict["username"] as! String, introduction: "Placeholder for desscription", image: UIImage(data: profileData) ?? nil))
-                    }
+                    
+                    let userDict = user.value as! [String : Any]
+                    self.currentUserArray.append(User(uid : user.key, name: userDict["username"] as! String, introduction: "Placeholder for desscription", image: UIImage(data: data ?? Data()) ?? nil))
+                    
                     self.table.reloadData()
                 })
             }
@@ -95,13 +106,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
-    
     class User{
-        let name: String
-        let introduction: String
-        let image: UIImage?
+        let uid : String
+        let name : String
+        let introduction : String
+        let image : UIImage?
         
-        init(name: String, introduction: String, image: UIImage?) {
+        init(uid : String, name: String, introduction: String, image: UIImage?) {
+            self.uid = uid;
             self.name = name
             self.introduction = introduction
             self.image = image

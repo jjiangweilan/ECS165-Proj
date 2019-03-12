@@ -20,22 +20,7 @@ class ProfileViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func logout(_ sender: UIButton) {
-        
-        /* force to end editing first. If not, the editing will be ended
-         * after logout which causes error */
-        self.view.endEditing(true);
-        do {
-            try
-            Auth.auth().signOut()
-            FBSDKLoginManager.init().logOut()
-            self.dismiss(animated: true, completion: nil)
-        }
-        catch {
-            //signout failed
-        }
-        //jump to the first page
-    }
+    
     /*
     // MARK: - Navigation
 

@@ -19,8 +19,7 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var gender: UITextField!
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         profilePhoto.layer.borderWidth = 1
@@ -29,29 +28,16 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
         profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
         profilePhoto.clipsToBounds = true
         
-        DatabaseBridge.getProfilePic(userID: Auth.auth().currentUser!.uid) { (data, error) in
-            if let imageData = data {
-                self.profilePhoto.image = UIImage(data: data!)
-            }
-        }
+        let appDel = UIApplication.shared.delegate as! AppDelegate
         
-        DatabaseBridge.getUserInfo(snapshotFunc: { (snapshot) in
-            
-            let value = snapshot.value as? NSDictionary
-            self.name.text =  value?["name"] as? String ?? ""
-            self.username.text =  value?["username"] as? String ?? ""
-            self.email.text =  value?["email"] as? String ?? ""
-            self.gender.text =  value?["gender"] as? String ?? ""
-            self.phone.text =  value?["phone"] as? String ?? ""
-            
-//            let userPictureBase64 = value?["profile picture"] as? String ?? ""
-//
-//            if let p = Data(base64Encoded: userPictureBase64) {
-//                let image = UIImage(data: p)
-//                self.profilePhoto.image = image
-//            }
-            
-        })
+        self.profilePhoto.image = appDel.userData.profilePic
+        
+        self.name.text =  appDel.userData.realName
+        self.username.text =  appDel.userData.userName
+        self.email.text =  appDel.userData.email
+        self.gender.text =  appDel.userData.gender
+        self.phone.text =  appDel.userData.phone
+        
         self.tableView.isScrollEnabled = false
         self.tableView.alwaysBounceVertical = false
         
@@ -101,6 +87,8 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
         
         let actionConfirm = UIAlertAction(title: "Yes", style: .default) { (_) in
             let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+            let appDel = UIApplication.shared.delegate as! AppDelegate
+            appDel.userData.profilePic = image
             self.profilePhoto.image = image
             DatabaseBridge.uploadProfilePic(userID: Auth.auth().currentUser!.uid, imageData: image.pngData()!)
             picker.dismiss(animated: true, completion: nil)
@@ -123,6 +111,9 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         DatabaseBridge.updateUserInfo(key: textField.accessibilityIdentifier!, value: textField.text ?? "")
+        
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -147,5 +138,21 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
     
     @IBAction func dismiss() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func logout(_ sender: UIButton) {
+        /* force to end editing first. If not, the editing will be ended
+         * after logout which causes error */
+        self.view.endEditing(true);
+        do {
+            try
+                Auth.auth().signOut()
+            FBSDKLoginManager.init().logOut()
+            self.parent?.dismiss(animated: true, completion: nil)
+        }
+        catch {
+            //signout failed
+        }
+        //jump to the first page
     }
 }

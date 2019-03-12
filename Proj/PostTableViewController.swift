@@ -35,7 +35,7 @@ class PostTableViewController: UITableViewController {
         imageView.image = postArr[indexPath.section].image
         
         let contentView = cell.contentView.viewWithTag(2) as! UILabel
-        contentView.text = postArr[indexPath.section].text
+        contentView.text = postArr[indexPath.section].content
         contentView.sizeToFit()
         
         let profilePic = cell.contentView.viewWithTag(3) as! UIImageView
@@ -50,9 +50,6 @@ class PostTableViewController: UITableViewController {
     func populateTableDataByCurrentUser() -> [Post] {
         var postArr = [Post]()
         
-        //dumb data
-        postArr.append(Post(userName: "Jiehong", profilePic: UIImage(), text: "this tastes very good ohhhhhhhhh\n lalallalala", image: UIImage(named : "chinese") ?? UIImage(), likes: [("Jiyun", "dwafewewad")]));
-        postArr.append(Post(userName: "Zexu", profilePic: UIImage(), text: "this tastes very good ohhhhhhhhh\n lalallalala\n aaaaaaa", image: UIImage(named : "japanese") ?? UIImage(), likes: [("Jiehong", "2ewdw222")]));
         return postArr
     }
     
