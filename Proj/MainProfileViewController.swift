@@ -24,7 +24,7 @@ class MainProfileViewController: UIViewController {
     
     var mode : MainProfileViewMode = .ProfileMode
     
-    var posts : [String : Any]?
+    var posts : [Post]?
     var following : [String]?
     var follower : [String]?
     
@@ -36,6 +36,7 @@ class MainProfileViewController: UIViewController {
         
         loadProfileData()
         changeViewData()
+        populatePostViewData()
     }
     
     override func viewDidLoad() {
@@ -92,6 +93,7 @@ class MainProfileViewController: UIViewController {
         
         self.follower = self.userData.follower
         self.following = self.userData.following
+        self.posts = self.userData.posts
         self.profilePic.image = self.userData.profilePic
     }
 
@@ -124,4 +126,8 @@ class MainProfileViewController: UIViewController {
         self.fullUserName.text = "\(self.userData.userName)"
     }
 
+    func populatePostViewData() {
+        let childVC = self.children.first as! ProfilePostViewController
+        childVC.posts = self.userData.posts
+    }
 }

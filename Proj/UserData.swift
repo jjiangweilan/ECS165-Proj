@@ -25,10 +25,6 @@ class UserData {
     var follower = [String]()
     var following = [String]()
     
-    func startToListen() {
-        
-    }
-    
     static func populate (userData : UserData, userID : String) -> [DatabaseHandle] {
         var handles : [DatabaseHandle]! = nil
         
@@ -56,6 +52,11 @@ class UserData {
             value?.forEach({ (key, value) in
                 let key = key as! String
                 let value = value as! NSDictionary
+                for p in userData.posts {
+                    if (key == "\(p.time as! uint)") {
+                        continue
+                    }
+                }                
                 
                 var post = Post()
                 post.content = value["content"] as! String
@@ -63,7 +64,12 @@ class UserData {
                 post.userID = userID
                 post.time = value["timeStamp"] as! uint
                 
-                userData.posts.append(post)
+                
+                DatabaseBridge.getUserPostsImage(uid: userID, pid: key, callback: { (data, nil) in
+                    post.image = UIImage(data: data ?? Data())
+
+                    userData.posts.append(post)
+                })
             })
         })
         

@@ -589,7 +589,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jSH-ve-n3y">
                                 <rect key="frame" x="0.0" y="348" width="375" height="381"/>
                                 <connections>
-                                    <segue destination="feb-qc-MO2" kind="embed" id="Oln-c9-gCL"/>
+                                    <segue destination="paA-Ko-8aV" kind="embed" id="xab-9V-Huh"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -621,87 +621,57 @@
             </objects>
             <point key="canvasLocation" x="3620" y="1698"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="sEm-YE-N5I">
+        <!--Profile Post View Controller-->
+        <scene sceneID="dRx-so-gfB">
             <objects>
-                <viewController id="feb-qc-MO2" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3T2-gf-0Z5">
+                <viewController id="paA-Ko-8aV" customClass="ProfilePostViewController" customModule="Proj" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ocq-ZQ-Bjx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="381"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H18-TJ-RuC">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="381"/>
-                                <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cei-a4-gnJ">
-                                        <rect key="frame" x="0.0" y="-1" width="374" height="530"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Nuv-wg-6Ps">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="347"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8Nn-lE-Pw7">
+                                    <size key="itemSize" width="175" height="174"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="xUv-Lc-s49" customClass="CollectionViewCell" customModule="Proj">
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="174"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="175" height="174"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sUu-RS-iBl">
+                                                    <rect key="frame" x="0.0" y="0.0" width="175" height="174"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
                                         <connections>
-                                            <segue destination="V4P-p2-re1" kind="embed" id="FGA-FD-UWA"/>
+                                            <outlet property="postpic" destination="sUu-RS-iBl" id="3fx-V3-jAI"/>
                                         </connections>
-                                    </containerView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="Cei-a4-gnJ" firstAttribute="leading" secondItem="H18-TJ-RuC" secondAttribute="leading" id="DJl-IA-Yti"/>
-                                    <constraint firstAttribute="trailing" secondItem="Cei-a4-gnJ" secondAttribute="trailing" constant="1" id="ExK-hc-BZN"/>
-                                    <constraint firstAttribute="bottom" secondItem="Cei-a4-gnJ" secondAttribute="bottom" id="cCp-Xj-lYl"/>
-                                    <constraint firstItem="Cei-a4-gnJ" firstAttribute="centerY" secondItem="H18-TJ-RuC" secondAttribute="centerY" id="cFW-TC-E2O"/>
-                                    <constraint firstItem="Cei-a4-gnJ" firstAttribute="centerX" secondItem="H18-TJ-RuC" secondAttribute="centerX" id="eJS-lZ-0Oy"/>
-                                    <constraint firstItem="Cei-a4-gnJ" firstAttribute="top" secondItem="H18-TJ-RuC" secondAttribute="top" constant="-1" id="qPf-2Y-71B"/>
-                                </constraints>
-                            </scrollView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="H18-TJ-RuC" secondAttribute="bottom" id="OEK-Ya-vMd"/>
-                            <constraint firstAttribute="trailing" secondItem="H18-TJ-RuC" secondAttribute="trailing" id="PLk-jW-ost"/>
-                            <constraint firstItem="H18-TJ-RuC" firstAttribute="top" secondItem="3T2-gf-0Z5" secondAttribute="top" id="bLG-XY-6Gx"/>
-                            <constraint firstItem="H18-TJ-RuC" firstAttribute="leading" secondItem="3T2-gf-0Z5" secondAttribute="leading" id="wqP-gf-X4N"/>
+                            <constraint firstItem="0qS-lj-zXQ" firstAttribute="bottom" secondItem="Nuv-wg-6Ps" secondAttribute="bottom" id="Mf0-mP-nlW"/>
+                            <constraint firstItem="Nuv-wg-6Ps" firstAttribute="trailing" secondItem="0qS-lj-zXQ" secondAttribute="trailing" id="Wc8-Tt-Huu"/>
+                            <constraint firstItem="Nuv-wg-6Ps" firstAttribute="top" secondItem="ocq-ZQ-Bjx" secondAttribute="top" id="ZVn-f5-p2n"/>
+                            <constraint firstItem="Nuv-wg-6Ps" firstAttribute="leading" secondItem="0qS-lj-zXQ" secondAttribute="leading" id="bhE-e9-syj"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="GAK-pb-2R9"/>
+                        <viewLayoutGuide key="safeArea" id="0qS-lj-zXQ"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8yc-2u-gnu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cXq-dR-a00" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4409" y="1814"/>
-        </scene>
-        <!--Collection View Controller-->
-        <scene sceneID="VlY-QP-6o6">
-            <objects>
-                <collectionViewController id="V4P-p2-re1" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LZK-aZ-a8p">
-                        <rect key="frame" x="0.0" y="0.0" width="374" height="530"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="1HO-fP-yWb">
-                            <size key="itemSize" width="103" height="100"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" id="6pm-Af-JKx">
-                                <rect key="frame" x="0.0" y="0.0" width="103" height="100"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="103" height="100"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="36615-le-petit-kit" translatesAutoresizingMaskIntoConstraints="NO" id="S1p-TF-Psc">
-                                            <rect key="frame" x="0.0" y="0.0" width="103" height="100"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                    </subviews>
-                                </view>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="V4P-p2-re1" id="Vfl-sQ-vbC"/>
-                            <outlet property="delegate" destination="V4P-p2-re1" id="5cA-Pv-nVC"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7ER-td-me0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5324.8000000000002" y="1741.6256157635469"/>
+            <point key="canvasLocation" x="4768.8000000000002" y="1559.8522167487686"/>
         </scene>
         <!--Profile Table View Controller-->
         <scene sceneID="wW8-Am-521">
@@ -1559,7 +1529,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="36615-le-petit-kit" width="360" height="239"/>
         <image name="Cute-Pineapple-Shape-Sauce-Plate-Cartoon-Ceramic-Flat-Plate-Dish-Instagram-Style-Food-Tray-Fruit-Salad" width="800" height="800"/>
         <image name="Dessert" width="900" height="900"/>
         <image name="home_origin" width="37.5" height="37.5"/>

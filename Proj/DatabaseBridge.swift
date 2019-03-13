@@ -124,6 +124,12 @@ class DatabaseBridge {
         return ref.child("posts/\(uid)").queryOrderedByKey().observe(.value, with: snapshotFunc)
     }
     
+    static func getUserPostsImage(uid : String, pid : String, callback : @escaping (Data?, Error?) -> Void) {
+        let imageRef = storageRef.child("images/\(uid)/\(pid)")
+        
+        imageRef.getData(maxSize: 20 * 1024 * 1024, completion: callback)
+    }
+    
     static func followUser(followingID : String) {
         let time = uint(NSDate().timeIntervalSince1970)
         ref.child("follow/\(Auth.auth().currentUser!.uid)/following/\(followingID)").setValue(time)
