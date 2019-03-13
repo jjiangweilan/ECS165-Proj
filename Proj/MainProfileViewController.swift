@@ -21,6 +21,7 @@ class MainProfileViewController: UIViewController {
     @IBOutlet weak var postCount : UILabel!
     @IBOutlet weak var profilePic : UIImageView!
     @IBOutlet weak var fullUserName : UILabel!
+    @IBOutlet weak var userDescription: UITextView!
     
     var mode : MainProfileViewMode = .ProfileMode
     
@@ -42,10 +43,10 @@ class MainProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         profilePic.layer.borderWidth = 1
-        profilePic.layer.masksToBounds = false
-        profilePic.layer.borderColor = UIColor.black.cgColor
-        profilePic.layer.cornerRadius = profilePic.frame.height/2
-        profilePic.clipsToBounds = true
+        profilePic.layer.masksToBounds = false
+        profilePic.layer.borderColor = UIColor.black.cgColor
+        profilePic.layer.cornerRadius = profilePic.frame.height/2
+        profilePic.clipsToBounds = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -60,41 +61,70 @@ class MainProfileViewController: UIViewController {
     
     func changeToObserveView(observingID : String) {
         mode = .ObserveMode
-        
         self.observingID = observingID
-        
-        DatabaseBridge.databaseHas(path: "following/\(Auth.auth().currentUser!.uid)/\(observingID)", hasCallback: {
-            self.modeButton.titleLabel?.text = "Followed"
-            self.modeButton.isUserInteractionEnabled = false
-            
-        }, hasNotCallback: {
-            self.modeButton.titleLabel?.text = "Follow"
-            self.modeButton.isUserInteractionEnabled = true
-        })
     }
     
     func changeToProfileView() {
         mode = .ProfileMode
-        modeButton.titleLabel?.text = "Edit Profile"
+        modeButton.setTitle("Edit Profile", for: .normal)
+        modeButton.backgroundColor = .clear
+        modeButton.layer.cornerRadius = 5
+        modeButton.layer.borderWidth = 0.5
+        modeButton.layer.borderColor = UIColor.black.cgColor
     }
     
     func loadProfileData() {
         if (self.mode == .ProfileMode) { // profile
+            changeToProfileView()
+            
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             self.userData = appDelegate.userData
             
             self.modeButton.addTarget(self, action: #selector(self.showEditableUserProfileView), for: .touchUpInside)
-            changeToProfileView()
+            let collectionViewController = self.children.first as! ProfilePostViewController
+            
+            let returnButton = collectionViewController.returnButton
+            for c in returnButton!.constraints {
+                if c.identifier == "ReturnButtonHeight" {
+                    c.constant = 0
+                }
+            }
+            returnButton!.setTitle("", for: .normal)
+            returnButton?.isUserInteractionEnabled = false
+            
         }
         else { // observe
             changeToObserveView(observingID: userData.uid)
             self.modeButton.addTarget(self, action: #selector(self.follow), for: .touchUpInside)
+            
+            let collectionViewController = self.children.first as! ProfilePostViewController
+            
+            let returnButton = collectionViewController.returnButton
+            for c in returnButton!.constraints {
+                if c.identifier == "ReturnButtonHeight" {
+                    c.constant = 30
+                }
+            }
+            returnButton?.addTarget(self, action: #selector(self.dismissWithAnimation), for: .touchUpInside)
+            
+            let appDel = UIApplication.shared.delegate as! AppDelegate
+            for userID in userData.follower {
+                if (userID == appDel.userData.uid) {
+                    modeButton.setTitle("Followed", for: .normal)
+                    modeButton.removeTarget(nil, action: nil, for: .allEvents)
+                    modeButton.addTarget(self, action: #selector(self.unfollow), for: .touchUpInside)
+                    return
+                }
+            }
+            
+            dataBaseHandles = UserData.populate(userData: self.userData, userID: self.userData.uid, callback: self.reloadDataAfterFetch)
+            
+            modeButton.setTitle("Follow", for: .normal)
+            modeButton.removeTarget(nil, action: nil, for: .allEvents)
+            modeButton.addTarget(self, action: #selector(self.follow), for: .touchUpInside)
         }
         
-        self.follower = self.userData.follower
-        self.following = self.userData.following
-        self.posts = self.userData.posts
-        self.profilePic.image = self.userData.profilePic
+        reloadDataAfterFetch()
     }
 
     @objc func showEditableUserProfileView() {
@@ -108,6 +138,13 @@ class MainProfileViewController: UIViewController {
         DatabaseBridge.followUser(followingID: self.userData.uid)
         follower?.append(appDel.userData.userName)
         
+        modeButton.setTitle("Followed", for: .normal)
+        modeButton.removeTarget(nil, action: nil, for: .allEvents)
+        modeButton.addTarget(self, action: #selector(self.unfollow), for: .touchUpInside)
+    }
+    
+    @objc func dismissWithAnimation() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func unfollow() {
@@ -117,6 +154,10 @@ class MainProfileViewController: UIViewController {
         if (index != -1) {
             appDel.userData.following.remove(at: index)
         }
+        
+        modeButton.setTitle("Follow", for: .normal)
+        modeButton.removeTarget(nil, action: nil, for: .allEvents)
+        modeButton.addTarget(self, action: #selector(self.follow), for: .touchUpInside)
     }
     
     func changeViewData() {
@@ -129,5 +170,17 @@ class MainProfileViewController: UIViewController {
     func populatePostViewData() {
         let childVC = self.children.first as! ProfilePostViewController
         childVC.posts = self.userData.posts
+    }
+    
+    func reloadDataAfterFetch() {
+        self.follower = self.userData.follower
+        self.following = self.userData.following
+        self.posts = self.userData.posts
+        self.profilePic.image = self.userData.profilePic
+        changeViewData()
+        
+        let childVC = self.children.first as! ProfilePostViewController
+        childVC.posts = self.userData.posts
+        childVC.collectionView.reloadData()
     }
 }

@@ -15,10 +15,8 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     @IBOutlet weak var photoPost: UIButton!
     @IBOutlet weak var libraryPost: UIButton!
-    
     @IBOutlet weak var imageChoose: UIImageView!
     @IBOutlet weak var textContent: UITextView!
-    
     
     @IBAction func takePicture(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
@@ -36,7 +34,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
         }
     }
     
-
     @IBAction func libraryPost(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
             let imagePicker = UIImagePickerController()
@@ -116,21 +113,12 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
                 
         }
     }
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        // Do any additional setup after loading the view.
-//    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        textContent.layer.borderWidth = 1.0
+        textContent.layer.borderColor = UIColor.black.cgColor
     }
-    */
+
 
 }

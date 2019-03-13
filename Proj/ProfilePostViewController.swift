@@ -12,6 +12,9 @@ class ProfilePostViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var posts : [Post]? = nil
     
+    @IBOutlet weak var returnButton: UIButton!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let p = posts {
             return p.count
@@ -33,6 +36,17 @@ class ProfilePostViewController: UIViewController, UICollectionViewDelegate, UIC
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+        layout.itemSize = CGSize(width: screenWidth/3, height: screenWidth/3)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        collectionView.collectionViewLayout = layout
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FBSDKLoginKit
 import FBSDKCoreKit
-class ProfileTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class ProfileTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var profilePhoto: UIImageView!
     
@@ -19,13 +19,20 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var gender: UITextField!
-
+    @IBOutlet weak var introduction: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set style for introcution
+        introduction.layer.cornerRadius = 5
+        introduction.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
+        introduction.layer.borderWidth = 0.5
+        
         profilePhoto.layer.borderWidth = 1
         profilePhoto.layer.masksToBounds = false
         profilePhoto.layer.borderColor = UIColor.black.cgColor
-        profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
+        profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
         profilePhoto.clipsToBounds = true
         
         let appDel = UIApplication.shared.delegate as! AppDelegate
@@ -46,6 +53,7 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
         email.delegate = self
         phone.delegate = self
         gender.delegate = self
+        introduction.delegate = self
     }
     
     func openCamera(action : UIAlertAction) {
@@ -111,15 +119,18 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         DatabaseBridge.updateUserInfo(key: textField.accessibilityIdentifier!, value: textField.text ?? "")
-        
-        let appDel = UIApplication.shared.delegate as! AppDelegate
-        
+        textField.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         DatabaseBridge.updateUserInfo(key: textField.accessibilityIdentifier!, value: textField.text ?? "")
         textField.endEditing(true)
         return true
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        DatabaseBridge.updateUserInfo(key: textView.accessibilityIdentifier!, value: textView.text ?? "")
+        textView.endEditing(true)
     }
     
     @IBAction func changeProfilePicture(_ sender: Any) {

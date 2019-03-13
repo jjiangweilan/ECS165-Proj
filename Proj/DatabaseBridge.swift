@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import FirebaseDatabase
+import UserNotifications
 
 class DatabaseBridge {
     static var ref : DatabaseReference!
@@ -44,13 +45,14 @@ class DatabaseBridge {
             "email" : email,
             "profile picture" : "nil",
             "gender" : "secrete",
-            "phone" : "123456"
+            "phone" : "123456",
+            "introduction" : "Hello, I'm\(name)"
         ]
         ref.child("users/\(user.user.uid)").setValue(userDataTemplate)
     }
     
-    static func getUserInfo(snapshotFunc : @escaping (DataSnapshot) -> Void) -> DatabaseHandle {
-        return ref.child("users").child(Auth.auth().currentUser!.uid).observe(.value, with: { (snapshot) in
+    static func getUserInfo(uid : String, snapshotFunc : @escaping (DataSnapshot) -> Void) -> DatabaseHandle {
+        return ref.child("users").child(uid).observe(.value, with: { (snapshot) in
             snapshotFunc(snapshot)
             
         }) { (error) in
@@ -96,7 +98,7 @@ class DatabaseBridge {
         let profileRef = storageRef.child("profilePicture/\(userID)")
         
         profileRef.putData(imageData, metadata: nil) { (metadata, error) in
-            guard let metadata = metadata else {
+            guard let _ = metadata else {
                 // Uh-oh, an error occurred!
                 return
             }
@@ -106,7 +108,7 @@ class DatabaseBridge {
     static func getProfilePic(userID : String, callback : @escaping (Data?, Error?) -> Void) {
         let profileRef = storageRef.child("profilePicture/\(userID)")
         callback(nil, nil)
-        //profileRef.getData(maxSize: 20 * 1024 * 1024, completion: callback)
+        profileRef.getData(maxSize: 20 * 1024 * 1024, completion: callback)
     }
     
     static func uploadImage(userID : String, timeStampAsPostID : uint, imageData : Data) {
@@ -134,6 +136,28 @@ class DatabaseBridge {
         let time = uint(NSDate().timeIntervalSince1970)
         ref.child("follow/\(Auth.auth().currentUser!.uid)/following/\(followingID)").setValue(time)
         ref.child("follow/\(followingID)/follower/\(Auth.auth().currentUser!.uid)").setValue(time)
+    }
+    
+    static func getFirstFewPosts(uid : String, snapshotFunc : @escaping (DataSnapshot) -> Void) {
+        ref.child("posts/\(uid)")
+    }
+    
+    static func observeFollower(uid : String) {
+        ref.child("follow/\(uid)/follower").observe(.childAdded) { (snapshot) in
+            let content = UNMutableNotificationContent()
+            content.body = "A User Has Followed you"
+            content.categoryIdentifier = "UserType"
+            content.sound = UNNotificationSound.default
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 30, repeats: false)
+            
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            
+            let center = UNUserNotificationCenter.current()
+            center.add(request)
+        }
+        //notification
+        
     }
     
     static func getFollowing(uid : String, callback : @escaping (DataSnapshot) -> Void) ->DatabaseHandle {

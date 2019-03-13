@@ -50,6 +50,12 @@ class PostTableViewController: UITableViewController {
     func populateTableDataByCurrentUser() -> [Post] {
         var postArr = [Post]()
         
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        
+        for following in appDel.userData.following {
+            //TO_DO
+        }
+        
         return postArr
     }
     

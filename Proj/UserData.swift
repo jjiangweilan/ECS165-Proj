@@ -21,14 +21,14 @@ class UserData {
     var email : String = ""
     var posts : [Post] = [Post]()
     var uid : String = ""
-    
+    var introduction : String = ""
     var follower = [String]()
     var following = [String]()
     
-    static func populate (userData : UserData, userID : String) -> [DatabaseHandle] {
+    static func populate (userData : UserData, userID : String, callback : (()->())? = nil) -> [DatabaseHandle] {
         var handles : [DatabaseHandle]! = nil
         
-        let handle1 = DatabaseBridge.getUserInfo(snapshotFunc: { (snapshot) in
+        let handle1 = DatabaseBridge.getUserInfo(uid: userID, snapshotFunc: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             
             userData.uid = userID
@@ -38,11 +38,20 @@ class UserData {
             userData.realName = value?["name"] as! String
             userData.phone = value?["phone"] as! String
             userData.userName = value?["username"] as! String
+            //userData.introduction = value?["introduction"] as! String
+            
+            if let c = callback {
+                c()
+            }
         })
         
         DatabaseBridge.getProfilePic(userID: userID, callback: { (data, error) in
             if let imageData = data {
                 userData.profilePic = UIImage(data: imageData) ?? UIImage()
+            }
+            
+            if let c = callback {
+                c()
             }
         })
         
@@ -58,17 +67,19 @@ class UserData {
                     }
                 }                
                 
-                var post = Post()
+                let post = Post()
                 post.content = value["content"] as! String
                 post.likes = value["like"] as? [String]
                 post.userID = userID
                 post.time = value["timeStamp"] as! uint
                 
-                
                 DatabaseBridge.getUserPostsImage(uid: userID, pid: key, callback: { (data, nil) in
                     post.image = UIImage(data: data ?? Data())
 
                     userData.posts.append(post)
+                    if let c = callback {
+                        c()
+                    }
                 })
             })
         })
@@ -78,25 +89,34 @@ class UserData {
             if let v = value {
                 userData.follower = v.allKeys as! [String]
             }
+            
+            if let c = callback {
+                c()
+            }
         })
         
         let handle4 = DatabaseBridge.getFollowing(uid: userID, callback: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             if let v = value {
                 userData.following = v.allKeys as! [String]
-                let content = UNMutableNotificationContent()
-                content.body = "A User Has Followed you"
-                content.categoryIdentifier = "UserType"
-                content.sound = UNNotificationSound.default
-                
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-                
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                
-                let center = UNUserNotificationCenter.current()
-                center.add(request)
+            }
+            
+            if let c = callback {
+                c()
             }
         })
+        //notification
+        let content = UNMutableNotificationContent()
+        content.body = "A User Has Followed you"
+        content.categoryIdentifier = "UserType"
+        content.sound = UNNotificationSound.default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
+        
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        let center = UNUserNotificationCenter.current()
+        center.add(request)
         
         handles = [handle1, handle2, handle3, handle4]
         

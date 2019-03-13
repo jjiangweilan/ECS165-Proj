@@ -53,7 +53,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
         mainProfileViewController.mode = .ObserveMode
         mainProfileViewController.userData = UserData()
-        mainProfileViewController.dataBaseHandles = UserData.populate(userData: mainProfileViewController.userData, userID: userID)
+        mainProfileViewController.userData.uid = userID
         
         self.present(mainProfileViewController, animated: true, completion: nil)
     }

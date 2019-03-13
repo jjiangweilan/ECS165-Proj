@@ -29,13 +29,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController")
                 self.window?.rootViewController?.present(controller, animated: true, completion: nil)
                 
-                UserData.populate(userData: self.userData, userID: user.uid)
+                for c in controller.children {
+                    if let castedController = c as? MainProfileViewController {
+                        let _ = castedController.view
+                        castedController.userData = UserData()
+                        castedController.mode = .ProfileMode
+                        UserData.populate(userData: self.userData, userID: user.uid, callback: castedController.reloadDataAfterFetch)
+                        DatabaseBridge.observeFollower(uid: user.uid)
+                    }
+                }
+                
             } else {
                 // No user is signed in.
             }
         }
         
         UNUserNotificationCenter.current().delegate = self
+        
+        let options: UNAuthorizationOptions = [.alert, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) {
+            (granted, error) in
+            if !granted {
+                print("Something went wrong")
+            }
+        }
         return true
     }
 
