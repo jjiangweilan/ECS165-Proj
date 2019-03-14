@@ -66,12 +66,14 @@ class UserData {
                 DatabaseBridge.getProfilePic(userID: userID, callback: { (data, error) in
                     let post = Post()
                     post.content = value["content"] as! String
-                    post.likes = value["like"] as? [String]
+                    let likes = value["likes"] as? NSDictionary
+                    post.likes = likes?.allValues as? [String]
                     post.userID = userID
                     post.time = value["timeStamp"] as! uint
                     post.tags = value["tags"] as? [String] ?? [String]()
                     post.postID = key
                     post.userName = userData.userName
+                    
                     if let imageData = data {
                         post.profilePic = UIImage(data: imageData) ?? UIImage()
                     }
