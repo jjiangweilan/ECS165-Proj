@@ -12,10 +12,11 @@ class Post {
     var profilePic : UIImage!
     var userID : String!
     var userName : String!
-    var likes : [String]! //(username, userid)
+    var likes : [String]!
     var image : UIImage!
     var content : String!
     var time : uint!
+    var tags : [String]!
     
     init(){}
 }

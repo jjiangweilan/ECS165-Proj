@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     var window: UIWindow?
     var userData = UserData()
+    var handles = [DatabaseHandle]()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -34,8 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         let _ = castedController.view
                         castedController.userData = UserData()
                         castedController.mode = .ProfileMode
-                        UserData.populate(userData: self.userData, userID: user.uid, callback: castedController.reloadDataAfterFetch)
-                        DatabaseBridge.observeFollower(uid: user.uid)
+                        let handles = UserData.populate(userData: self.userData, userID: user.uid, callback: castedController.reloadDataAfterFetch)
+                        self.handles.append(contentsOf: handles)
+                        self.handles.append(DatabaseBridge.observeFollower(uid: user.uid))
                     }
                 }
                 
@@ -78,6 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+        for h in handles {
+            DatabaseBridge.stopObserving(handle: h)
+        }
     }
 
     // MARK: - Core Data stack

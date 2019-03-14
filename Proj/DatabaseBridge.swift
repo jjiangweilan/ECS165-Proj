@@ -66,9 +66,6 @@ class DatabaseBridge {
     
     static func searchUser(userName : String, callback : @escaping (DataSnapshot) -> Void) {
         ref.child("users").queryOrdered(byChild: "username").queryStarting(atValue: userName).queryEnding(atValue: "\(userName)" + "\u{f8ff}").observeSingleEvent(of: DataEventType.value, with: callback)
-        /*{ (snapshot) in
-         let userInfo = snapshot.value as? [String : AnyObject] ?? [:]
-         }*/
     }
     
     static func queryUserInfo(byEmail email : String,  callback : @escaping (DataSnapshot) -> Void) {
@@ -107,7 +104,7 @@ class DatabaseBridge {
     
     static func getProfilePic(userID : String, callback : @escaping (Data?, Error?) -> Void) {
         let profileRef = storageRef.child("profilePicture/\(userID)")
-        callback(nil, nil)
+        
         profileRef.getData(maxSize: 20 * 1024 * 1024, completion: callback)
     }
     
@@ -142,14 +139,23 @@ class DatabaseBridge {
         ref.child("posts/\(uid)")
     }
     
-    static func observeFollower(uid : String) {
-        ref.child("follow/\(uid)/follower").observe(.childAdded) { (snapshot) in
+    static func singleObservation(path : String, snapshotFunc : @escaping (DataSnapshot) -> Void) {
+        ref.child("\(path)").observeSingleEvent(of: .value, with: snapshotFunc)
+    }
+    
+    static func getPostWithTag(tag : String, limit : UInt, snapshotFunc : @escaping (DataSnapshot) -> Void) {
+        ref.child("tags/\(tag)").queryOrdered(byChild: "lastPost").queryLimited(toLast: limit).observeSingleEvent(of: .value, with: snapshotFunc)
+    }
+    
+    static func observeFollower(uid : String) -> DatabaseHandle {
+        return ref.child("follow/\(uid)/follower").queryOrderedByValue().queryStarting(atValue: uint(NSDate().timeIntervalSince1970)).observe(.childAdded) { (snapshot) in
+            
             let content = UNMutableNotificationContent()
             content.body = "A User Has Followed you"
             content.categoryIdentifier = "UserType"
             content.sound = UNNotificationSound.default
             
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 30, repeats: false)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
             
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
             
@@ -157,7 +163,6 @@ class DatabaseBridge {
             center.add(request)
         }
         //notification
-        
     }
     
     static func getFollowing(uid : String, callback : @escaping (DataSnapshot) -> Void) ->DatabaseHandle {

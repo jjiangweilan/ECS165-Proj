@@ -30,7 +30,6 @@ class UserData {
         
         let handle1 = DatabaseBridge.getUserInfo(uid: userID, snapshotFunc: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            
             userData.uid = userID
             userData.gender = value?["gender"] as! String
             userData.email = value?["email"] as! String
@@ -38,7 +37,7 @@ class UserData {
             userData.realName = value?["name"] as! String
             userData.phone = value?["phone"] as! String
             userData.userName = value?["username"] as! String
-            //userData.introduction = value?["introduction"] as! String
+            userData.introduction = value?["introduction"] as! String
             
             if let c = callback {
                 c()
@@ -49,7 +48,9 @@ class UserData {
             if let imageData = data {
                 userData.profilePic = UIImage(data: imageData) ?? UIImage()
             }
-            
+            else {
+                print(error)
+            }
             if let c = callback {
                 c()
             }
@@ -61,26 +62,32 @@ class UserData {
             value?.forEach({ (key, value) in
                 let key = key as! String
                 let value = value as! NSDictionary
+                
+                var has = false
                 for p in userData.posts {
                     if (key == "\(p.time as! uint)") {
-                        continue
+                        has = true
+                        break
                     }
                 }                
+                if !has {
+                    let post = Post()
+                    post.content = value["content"] as! String
+                    post.likes = value["like"] as? [String]
+                    post.userID = userID
+                    post.time = value["timeStamp"] as! uint
+                    post.tags = value["tags"] as? [String] ?? [String]()
+                    
+                    DatabaseBridge.getUserPostsImage(uid: userID, pid: key, callback: { (data, nil) in
+                        post.image = UIImage(data: data ?? Data())
+                        
+                        userData.posts.append(post)
+                        if let c = callback {
+                            c()
+                        }
+                    })
+                }
                 
-                let post = Post()
-                post.content = value["content"] as! String
-                post.likes = value["like"] as? [String]
-                post.userID = userID
-                post.time = value["timeStamp"] as! uint
-                
-                DatabaseBridge.getUserPostsImage(uid: userID, pid: key, callback: { (data, nil) in
-                    post.image = UIImage(data: data ?? Data())
-
-                    userData.posts.append(post)
-                    if let c = callback {
-                        c()
-                    }
-                })
             })
         })
         
@@ -105,19 +112,6 @@ class UserData {
                 c()
             }
         })
-        //notification
-        let content = UNMutableNotificationContent()
-        content.body = "A User Has Followed you"
-        content.categoryIdentifier = "UserType"
-        content.sound = UNNotificationSound.default
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
-        
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        
-        let center = UNUserNotificationCenter.current()
-        center.add(request)
-        
         handles = [handle1, handle2, handle3, handle4]
         
         return handles

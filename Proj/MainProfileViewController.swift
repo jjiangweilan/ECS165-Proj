@@ -107,21 +107,9 @@ class MainProfileViewController: UIViewController {
             }
             returnButton?.addTarget(self, action: #selector(self.dismissWithAnimation), for: .touchUpInside)
             
-            let appDel = UIApplication.shared.delegate as! AppDelegate
-            for userID in userData.follower {
-                if (userID == appDel.userData.uid) {
-                    modeButton.setTitle("Followed", for: .normal)
-                    modeButton.removeTarget(nil, action: nil, for: .allEvents)
-                    modeButton.addTarget(self, action: #selector(self.unfollow), for: .touchUpInside)
-                    return
-                }
-            }
-            
             dataBaseHandles = UserData.populate(userData: self.userData, userID: self.userData.uid, callback: self.reloadDataAfterFetch)
             
-            modeButton.setTitle("Follow", for: .normal)
-            modeButton.removeTarget(nil, action: nil, for: .allEvents)
-            modeButton.addTarget(self, action: #selector(self.follow), for: .touchUpInside)
+            
         }
         
         reloadDataAfterFetch()
@@ -165,6 +153,7 @@ class MainProfileViewController: UIViewController {
         self.followerCount.text = "\(self.follower?.count ?? 0)"
         self.followingCount.text = "\(self.following?.count ?? 0)"
         self.fullUserName.text = "\(self.userData.userName)"
+        self.userDescription.text = self.userData.introduction
     }
 
     func populatePostViewData() {
@@ -182,5 +171,21 @@ class MainProfileViewController: UIViewController {
         let childVC = self.children.first as! ProfilePostViewController
         childVC.posts = self.userData.posts
         childVC.collectionView.reloadData()
+        
+        if (mode == .ObserveMode) {
+            let appDel = UIApplication.shared.delegate as! AppDelegate
+            for userID in userData.follower {
+                if (userID == appDel.userData.uid) {
+                    modeButton.setTitle("Followed", for: .normal)
+                    modeButton.removeTarget(nil, action: nil, for: .allEvents)
+                    modeButton.addTarget(self, action: #selector(self.unfollow), for: .touchUpInside)
+                    return
+                }
+            }
+            
+            modeButton.setTitle("Follow", for: .normal)
+            modeButton.removeTarget(nil, action: nil, for: .allEvents)
+            modeButton.addTarget(self, action: #selector(self.follow), for: .touchUpInside)
+        }
     }
 }

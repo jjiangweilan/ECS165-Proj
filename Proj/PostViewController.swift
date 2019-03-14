@@ -11,12 +11,14 @@ import Foundation
 import Firebase
 
 class PostViewController: UIViewController,
-UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
     
     @IBOutlet weak var photoPost: UIButton!
     @IBOutlet weak var libraryPost: UIButton!
     @IBOutlet weak var imageChoose: UIImageView!
     @IBOutlet weak var textContent: UITextView!
+    
+    var tags : [String] = [String]()
     
     @IBAction func takePicture(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
@@ -81,7 +83,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
         let content = textContent.text
         let postTime = uint(NSDate().timeIntervalSince1970)
         let userID = Auth.auth().currentUser!.uid
-        //let likes : [Int : String]? = nil
+        
         let postData : [String : Any] = [
             "userID" : userID,
             "content" : content ?? "",
@@ -90,12 +92,18 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
             ]
         
         DatabaseBridge.updateData(path: "posts/\(userID)/\(postTime)", data: postData)
-        DatabaseBridge.updateData(path: "users/\(userID)/lastPost", data: postTime)
+        DatabaseBridge.updateData(path: "posts/\(userID)/\(postTime)/tags", data: tags)
+        
+        for tag in tags {
+            DatabaseBridge.updateData(path: "tags/\(tag)/\(userID)/\(postTime)", data: postTime)
+            DatabaseBridge.updateData(path: "tags/\(tag)/\(userID)/lastPost", data: postTime)
+        }
+        
+        
         if let imageData = imageChoose.image?.pngData() {
             DatabaseBridge.uploadImage(userID: userID, timeStampAsPostID: postTime, imageData: imageData) //image data is stored in storage
             self.displayAlert(userMessage: "Posted")
         }
-    
     }
     
     func displayAlert(userMessage:String, okAction : (() -> Void)? = nil) -> Void {
@@ -118,7 +126,36 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
         textContent.layer.borderWidth = 1.0
         textContent.layer.borderColor = UIColor.black.cgColor
+        
+        self.textContent.delegate = self
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        
+        let tagArr = findTagInText(text: textView.attributedText.string)
+        
+        let newAttributedText = NSMutableAttributedString(string: textView.attributedText.string)
+        tags.removeAll()
+        for tag in tagArr {
+            newAttributedText.addAttribute(.foregroundColor, value: UIColor.blue, range: (textView.attributedText.string as NSString).range(of: tag))
+            tags.append(String(tag.dropFirst()))
+        }
+        
+       newAttributedText.addAttribute(.font, value:  UIFont.systemFont(ofSize: 15), range: NSRange(location: 0, length: newAttributedText.length))
+        
+        textView.attributedText = newAttributedText.copy() as! NSAttributedString
 
-
+    }
+    
+    private func findTagInText(text : String) -> [String] {
+        var rlt = [String]()
+        let tokens = text.split(separator: " ")
+        for word in tokens {
+            if word.hasPrefix("#") {
+                rlt.append(String(word))
+            }
+        }
+        
+        return rlt
+    }
 }

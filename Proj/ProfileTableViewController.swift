@@ -44,6 +44,7 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
         self.email.text =  appDel.userData.email
         self.gender.text =  appDel.userData.gender
         self.phone.text =  appDel.userData.phone
+        self.introduction.text = appDel.userData.introduction
         
         self.tableView.isScrollEnabled = false
         self.tableView.alwaysBounceVertical = false
@@ -159,7 +160,6 @@ class ProfileTableViewController: UITableViewController, UIImagePickerController
             try
                 Auth.auth().signOut()
             FBSDKLoginManager.init().logOut()
-            self.parent?.dismiss(animated: true, completion: nil)
         }
         catch {
             //signout failed
