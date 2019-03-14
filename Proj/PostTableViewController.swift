@@ -18,10 +18,6 @@ class PostTableViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.reloadData()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         
         postArr.removeAll()
         let appDel = UIApplication.shared.delegate as! AppDelegate
@@ -31,8 +27,13 @@ class PostTableViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         DatabaseBridge.singleObservation(path: "follow/\(userData.uid)/following") { (dataSnapshot) in
+            if let value = dataSnapshot.value as? NSDictionary {
+                
+            }
+            else {
+                return
+            }
             let value = dataSnapshot.value as! NSDictionary
-            
             var postCount = 30
             for userID in value.allKeys as! [String] {
                 if postCount == 0 {
@@ -59,20 +60,28 @@ class PostTableViewController: UIViewController, UITableViewDataSource, UITableV
                             post.time = postValue["timeStamp"] as! uint
                             post.content = postValue["content"] as? String ?? ""
                             post.tags = postValue["tags"] as? NSArray as? [String]
-                            
+                            let likes =  postValue["likes"] as? NSDictionary
+                            post.likes = likes?.allValues as? [String]
+                            post.postID = value.key as! String
+
                             DatabaseBridge.getUserPostsImage(uid: userID, pid: value.key as! String, callback: { (data, nil) in
                                 post.image = UIImage(data: data ?? Data())
+                                
+                                self.postArr.append(post)
+                                self.tableView.reloadData()
                             })
-                            
-                            post.likes = postValue["likes"] as? NSArray as? [String]
-                            post.postID = value.key as! String
-                            self.postArr.append(post)
-                            self.tableView.reloadData()
+
                         })
                     }
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.reloadDataAfterFetch()
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -97,7 +106,7 @@ class PostTableViewController: UIViewController, UITableViewDataSource, UITableV
         cell.likeUsers.isUserInteractionEnabled = false
         cell.PostPic.image = postArr[indexPath.row].image
         cell.textContent.text = postArr[indexPath.row].content
-    
+        
         DatabaseBridge.getProfilePic(userID: postArr[indexPath.row].userID) { (data, nil) in
             if let d = data {
                 cell.userProfilePic.image = UIImage(data: d)

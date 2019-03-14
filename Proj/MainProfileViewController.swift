@@ -37,7 +37,6 @@ class MainProfileViewController: UIViewController {
         
         loadProfileData()
         changeViewData()
-        populatePostViewData()
     }
     
     override func viewDidLoad() {
@@ -156,10 +155,6 @@ class MainProfileViewController: UIViewController {
         self.userDescription.text = self.userData.introduction
     }
 
-    func populatePostViewData() {
-        let childVC = self.children.first as! ProfilePostViewController
-        childVC.posts = self.userData.posts
-    }
     
     func reloadDataAfterFetch() {
         self.follower = self.userData.follower

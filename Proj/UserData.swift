@@ -33,9 +33,8 @@ class UserData {
             userData.uid = userID
             userData.gender = value?["gender"] as! String
             userData.email = value?["email"] as! String
-            userData.lastPost = value?["lastPost"] as! Int
-            userData.realName = value?["name"] as! String
-            userData.phone = value?["phone"] as! String
+            userData.realName = value?["name"] as? String ?? ""
+            userData.phone = value?["phone"] as? String ?? ""
             userData.userName = value?["username"] as! String
             userData.introduction = value?["introduction"] as! String
             
@@ -59,35 +58,35 @@ class UserData {
         let handle2 = DatabaseBridge.getUserPosts(uid : userID, snapshotFunc : { (snapshot) in
             let value = snapshot.value as? NSDictionary
             
+            var newPosts = [Post]()
             value?.forEach({ (key, value) in
                 let key = key as! String
                 let value = value as! NSDictionary
                 
-                var has = false
-                for p in userData.posts {
-                    if (key == "\(p.time as! uint)") {
-                        has = true
-                        break
-                    }
-                }                
-                if !has {
+                DatabaseBridge.getProfilePic(userID: userID, callback: { (data, error) in
                     let post = Post()
                     post.content = value["content"] as! String
                     post.likes = value["like"] as? [String]
                     post.userID = userID
                     post.time = value["timeStamp"] as! uint
                     post.tags = value["tags"] as? [String] ?? [String]()
-                    
+                    post.postID = key
+                    post.userName = userData.userName
+                    if let imageData = data {
+                        post.profilePic = UIImage(data: imageData) ?? UIImage()
+                    }
+                    else {
+                        print(error)
+                    }
                     DatabaseBridge.getUserPostsImage(uid: userID, pid: key, callback: { (data, nil) in
                         post.image = UIImage(data: data ?? Data())
-                        
-                        userData.posts.append(post)
+                        newPosts.append(post)
+                        userData.posts = newPosts
                         if let c = callback {
                             c()
                         }
                     })
-                }
-                
+                })
             })
         })
         

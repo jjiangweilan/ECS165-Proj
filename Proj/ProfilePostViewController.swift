@@ -30,6 +30,21 @@ class ProfilePostViewController: UIViewController, UICollectionViewDelegate, UIC
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! ShowPostViewController
+        let _ = controller.view
+        controller.numberLikes.text = "\(posts?[indexPath.row].likes?.count ?? 0)"
+        controller.postContent.text = posts?[indexPath.row].content
+        controller.postPic.image = posts?[indexPath.row].image
+        controller.profilePic.image = posts?[indexPath.row].profilePic
+        controller.user.text = posts?[indexPath.row].userName
+        controller.postID = posts?[indexPath.row].postID
+        controller.userID = posts?[indexPath.row].userID
+        
+        self.present(controller, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let collectionView = self.view.viewWithTag(5) as! UICollectionView

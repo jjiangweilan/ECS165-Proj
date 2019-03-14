@@ -44,8 +44,9 @@ class ShowPostViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         let appDel = UIApplication.shared.delegate as! AppDelegate
-        DatabaseBridge.singleObservation(path: "posts/\(userID)/\(postID)/likes/\(appDel.userData.uid)") { (dataSnapshot) in
-            if let _ = dataSnapshot.value as? uint {
+        let path = "posts/\(userID!)/\(postID!)/likes/\(appDel.userData.uid)"
+        DatabaseBridge.singleObservation(path: path) { (dataSnapshot) in
+            if let _ = dataSnapshot.value as? String {
                 self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
                 self.likeButton.addTarget(self, action: #selector(self.dislikeButton(_:)), for: .touchUpInside)
                 self.likeButton.setImage(UIImage(named: "liked"), for: .normal)
@@ -60,17 +61,18 @@ class ShowPostViewController: UIViewController {
     
     @objc func likeClicked(_ sender: Any) {
         let appDel = UIApplication.shared.delegate as! AppDelegate
-        DatabaseBridge.updateData(path: "posts/\(userID)/\(postID)/likes/\(appDel.userData.uid)", data: uint(NSDate().timeIntervalSince1970))
+        DatabaseBridge.updateData(path: "posts/\(userID!)/\(postID!)/likes/\(appDel.userData.uid)", data: appDel.userData.userName)
         
         self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
         self.likeButton.addTarget(self, action: #selector(self.dislikeButton(_:)), for: .touchUpInside)
         self.likeButton.setImage(UIImage(named: "liked"), for: .normal)
+        
         self.numberLikes.text = String(Int(self.numberLikes.text!)! + 1)
     }
     
     @objc func dislikeButton(_ sender : Any) {
          let appDel = UIApplication.shared.delegate as! AppDelegate
-        DatabaseBridge.remove(path: "posts/\(userID)/\(postID)/likes/\(appDel.userData.uid)")
+        DatabaseBridge.remove(path: "posts/\(userID!)/\(postID!)/likes/\(appDel.userData.uid)")
         
         self.likeButton.removeTarget(nil, action: nil, for: .allEvents)
         self.likeButton.addTarget(self, action: #selector(self.likeClicked(_:)), for: .touchUpInside)

@@ -39,6 +39,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         searchBar.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        currentPostArray.removeAll()
+        currentUserArray.removeAll()
+        self.table.reloadData()
+        self.searchBar.text = ""
+    }
+    
     func alterLayout() {
         table.tableHeaderView = UIView()
         // search bar in navigation bar
@@ -71,15 +80,17 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! ShowPostViewController
             let _ = controller.view
-            controller.numberLikes.text = "\(currentPostArray[indexPath.row].likes.count)"
+            controller.numberLikes.text = "\(currentPostArray[indexPath.row].likes?.count ?? 0)"
             controller.postContent.text = currentPostArray[indexPath.row].content
             controller.postPic.image = currentPostArray[indexPath.row].image
             controller.profilePic.image = currentPostArray[indexPath.row].profilePic
             controller.user.text = currentPostArray[indexPath.row].userName
-            
+            controller.postID = currentPostArray[indexPath.row].postID
+            controller.userID = currentPostArray[indexPath.row].userID
+                
             self.present(controller, animated: true, completion: nil)
         }
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,7 +120,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             
             DatabaseBridge.getProfilePic(userID: currentPostArray[indexPath.row].userID) { (data, nil) in
                 if let d = data {
-                    cell.userProfilePic.image = UIImage(data: d)
+                    self.currentPostArray[indexPath.row].profilePic = UIImage(data: d)
+                    cell.userProfilePic.image = self.currentPostArray[indexPath.row].profilePic
                 }
             }
             cell.textContent.isUserInteractionEnabled = false
@@ -158,6 +170,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             let searchText = searchBar.text!;
             currentPostArray.removeAll()
             DatabaseBridge.getPostWithTag(tag: searchText, limit: 20) { (dataSnapshot) in
+                if let _ = dataSnapshot.value as? NSDictionary {
+                    
+                }
+                else {
+                    return
+                }
                 let value = dataSnapshot.value as! NSDictionary
 
                 var postCount = 20
@@ -186,15 +204,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                                 post.time = postValue["timeStamp"] as! uint
                                 post.content = postValue["content"] as? String ?? ""
                                 post.tags = postValue["tags"] as! NSArray as? [String]
-    
+                                let likes =  postValue["likes"] as? NSDictionary
+                                post.likes = likes?.allValues as? [String]
+                                post.postID = postID
+                                
                                 DatabaseBridge.getUserPostsImage(uid: userID, pid: postID, callback: { (data, nil) in
                                     post.image = UIImage(data: data ?? Data())
+                                    self.currentPostArray.append(post)
+                                    self.table.reloadData()
                                 })
-                                
-                                post.likes = postValue["likes"] as! NSArray as? [String]
-                                
-                                self.currentPostArray.append(post)
-                                self.table.reloadData()
                             })
                             
                         })

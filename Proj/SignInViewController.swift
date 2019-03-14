@@ -68,7 +68,7 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
                     }
                 }
                 else {
-                    self.showMainView()
+                    self.showMainView(authData: user!)
                 }
             }
         }
@@ -83,10 +83,36 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
     }
     
     
-    func showMainView() {
+    func showMainView(authData : AuthDataResult) {
+        let user = authData.user
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        
+        appDel.userData.uid = user.uid
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController")
         self.present(controller, animated: true, completion: nil)
+        
+        for c in controller.children {
+            if let castedController = c as? MainProfileViewController {
+                let _ = castedController.view
+                castedController.userData = UserData()
+                castedController.mode = .ProfileMode
+                
+                for cc in controller.children {
+                    if let postTableViewController = cc as? PostTableViewController {
+                        appDel.callback = {
+                            castedController.reloadDataAfterFetch()
+                            postTableViewController.reloadDataAfterFetch()
+                        }
+                    }
+                }
+                
+                let handles = UserData.populate(userData: appDel.userData, userID: user.uid, callback: appDel.callback!)
+                appDel.handles.append(contentsOf: handles)
+                appDel.handles.append(DatabaseBridge.observeFollower(uid: user.uid))
+                break
+            }
+        }
     }
     
     func displayAlert(userMessage:String) -> Void {
@@ -127,7 +153,7 @@ class SignInViewController: UIViewController,FBSDKLoginButtonDelegate {
             DatabaseBridge.databaseHas(path: "users/\(authResult!.user.uid)", hasCallback: nil, hasNotCallback: {
                 DatabaseBridge.createUserData(user: authResult!, name: authResult?.user.displayName ?? "", email: authResult?.user.email ?? "")
             })
-            self.showMainView()
+            self.showMainView(authData: authResult!)
         }
     }
     
