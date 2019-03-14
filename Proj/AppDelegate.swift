@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     var userData = UserData()
     var handles = [DatabaseHandle]()
+    var callback : (() -> ())? = nil
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -24,9 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         DatabaseBridge.initRef()
         
-        
         Auth.auth().addStateDidChangeListener { auth, user in
             if let user = user {
+                self.userData.uid = user.uid
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController")
                 self.window?.rootViewController?.present(controller, animated: true, completion: nil)
@@ -36,11 +37,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         let _ = castedController.view
                         castedController.userData = UserData()
                         castedController.mode = .ProfileMode
-                        let handles = UserData.populate(userData: self.userData, userID: user.uid, callback: castedController.reloadDataAfterFetch)
+                        
+                        for cc in controller.children {
+                            if let postTableViewController = cc as? PostTableViewController {
+                                self.callback = {
+                                    castedController.reloadDataAfterFetch()
+                                    postTableViewController.reloadDataAfterFetch()
+                                }
+                            }
+                        }
+                        
+                        let handles = UserData.populate(userData: self.userData, userID: user.uid, callback: self.callback!)
                         self.handles.append(contentsOf: handles)
                         self.handles.append(DatabaseBridge.observeFollower(uid: user.uid))
+                        break
                     }
                 }
+                
                 
             } else {
                 // No user is signed in.

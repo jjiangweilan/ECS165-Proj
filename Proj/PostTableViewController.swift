@@ -8,109 +8,125 @@
 
 import UIKit
 
-class PostTableViewController: UITableViewController {
+class PostTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var postArr : [Post] = []
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        postArr =  populateTableDataByCurrentUser()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.tableView.reloadData()
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
-        return postArr.count
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Post Cell Reuse Identifier", for: indexPath)
-        
-        let imageView = cell.contentView.viewWithTag(1) as! UIImageView
-        imageView.image = postArr[indexPath.section].image
-        
-        let contentView = cell.contentView.viewWithTag(2) as! UILabel
-        contentView.text = postArr[indexPath.section].content
-        contentView.sizeToFit()
-        
-        let profilePic = cell.contentView.viewWithTag(3) as! UIImageView
-        profilePic.image = postArr[indexPath.section].profilePic
-        
-        let postUserName = cell.contentView.viewWithTag(4) as! UILabel
-        postUserName.text = postArr[indexPath.section].userName
-        
-        return cell
-    }
-    
-    func populateTableDataByCurrentUser() -> [Post] {
-        var postArr = [Post]()
-        
+        postArr.removeAll()
         let appDel = UIApplication.shared.delegate as! AppDelegate
-        
-        for following in appDel.userData.following {
-            //TO_DO
+        let userData = appDel.userData
+        if userData.uid == "" {
+            return
         }
         
-        return postArr
+        DatabaseBridge.singleObservation(path: "follow/\(userData.uid)/following") { (dataSnapshot) in
+            let value = dataSnapshot.value as! NSDictionary
+            
+            var postCount = 30
+            for userID in value.allKeys as! [String] {
+                if postCount == 0 {
+                    break
+                }
+                var thisPostCount = 3
+                
+                DatabaseBridge.singleObservation(path: "posts/\(userID)") { (dataSnapshot) in
+                    let postMap = dataSnapshot.value as! NSDictionary
+                    
+                    for value in postMap {
+                        if thisPostCount == 0 {
+                            break
+                        }
+                        let postValue = value.value as! NSDictionary
+                        thisPostCount -= 1
+                        postCount -= 1
+                        
+                        let post = Post()
+                        DatabaseBridge.singleObservation(path: "users/\(userID)/username", snapshotFunc: { (dataSnapshot) in
+                            let post = Post()
+                            post.userName = dataSnapshot.value as! String
+                            post.userID = userID
+                            post.time = postValue["timeStamp"] as! uint
+                            post.content = postValue["content"] as? String ?? ""
+                            post.tags = postValue["tags"] as? NSArray as? [String]
+                            
+                            DatabaseBridge.getUserPostsImage(uid: userID, pid: value.key as! String, callback: { (data, nil) in
+                                post.image = UIImage(data: data ?? Data())
+                            })
+                            
+                            post.likes = postValue["likes"] as? NSArray as? [String]
+                            post.postID = value.key as! String
+                            self.postArr.append(post)
+                            self.tableView.reloadData()
+                        })
+                    }
+                }
+            }
+        }
     }
     
-    func populateTableData() -> [Post] {
-        var postArr = [Post]()
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return postArr.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 295
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell else {
+            return UITableViewCell()
+        }
         
-        return postArr
+        cell.userName.text = postArr[indexPath.row].userName
+        
+        cell.likeUsers.text = postArr[indexPath.row].likes?.joined(separator: ",")
+        cell.likeUsers.isUserInteractionEnabled = false
+        cell.PostPic.image = postArr[indexPath.row].image
+        cell.textContent.text = postArr[indexPath.row].content
+    
+        DatabaseBridge.getProfilePic(userID: postArr[indexPath.row].userID) { (data, nil) in
+            if let d = data {
+                cell.userProfilePic.image = UIImage(data: d)
+            }
+        }
+        cell.textContent.isUserInteractionEnabled = false
+        return cell
+    }
+
+    func reloadDataAfterFetch() {
+        self.tableView.reloadData()
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! ShowPostViewController
+        let _ = controller.view
+        
+        controller.numberLikes.text = "\(postArr[indexPath.row].likes?.count ?? 0)"
+        controller.postContent.text = postArr[indexPath.row].content
+        controller.postPic.image = postArr[indexPath.row].image
+        controller.profilePic.image = postArr[indexPath.row].profilePic
+        controller.user.text = postArr[indexPath.row].userName
+        controller.postID = postArr[indexPath.row].postID
+        controller.userID = postArr[indexPath.row].userID
+        
+        self.present(controller, animated: true, completion: nil)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

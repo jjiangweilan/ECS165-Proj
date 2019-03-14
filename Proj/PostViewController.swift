@@ -93,7 +93,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDeleg
         
         DatabaseBridge.updateData(path: "posts/\(userID)/\(postTime)", data: postData)
         DatabaseBridge.updateData(path: "posts/\(userID)/\(postTime)/tags", data: tags)
-        
+        DatabaseBridge.updateData(path: "posts/\(userID)/\(postTime)/likes", data: [String]())
         for tag in tags {
             DatabaseBridge.updateData(path: "tags/\(tag)/\(userID)/\(postTime)", data: postTime)
             DatabaseBridge.updateData(path: "tags/\(tag)/\(userID)/lastPost", data: postTime)

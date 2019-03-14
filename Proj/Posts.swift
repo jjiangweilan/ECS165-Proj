@@ -17,6 +17,6 @@ class Post {
     var content : String!
     var time : uint!
     var tags : [String]!
-    
+    var postID : String!
     init(){}
 }

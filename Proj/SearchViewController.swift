@@ -68,8 +68,18 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             self.present(mainProfileViewController, animated: true, completion: nil)
         }
         else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! ShowPostViewController
+            let _ = controller.view
+            controller.numberLikes.text = "\(currentPostArray[indexPath.row].likes.count)"
+            controller.postContent.text = currentPostArray[indexPath.row].content
+            controller.postPic.image = currentPostArray[indexPath.row].image
+            controller.profilePic.image = currentPostArray[indexPath.row].profilePic
+            controller.user.text = currentPostArray[indexPath.row].userName
             
+            self.present(controller, animated: true, completion: nil)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,22 +100,19 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 return UITableViewCell()
             }
             
-            cell.userName.text = currentPostArray[indexPath.row].content
-            var names = [String]()
-            for userID in currentPostArray[indexPath.row].likes {
-                DatabaseBridge.singleObservation(path: "users/\(userID)/username") { (dataSnapshot) in
-                    let userName = dataSnapshot.value as! String
-                    names.append(userName)
-                }
-            }
-            cell.likeUsers.text = names.joined(separator: " ")
+            cell.userName.text = currentPostArray[indexPath.row].userName
+
+            cell.likeUsers.text = currentPostArray[indexPath.row].likes?.joined(separator: ",")
+            cell.likeUsers.isUserInteractionEnabled = false
             cell.PostPic.image = currentPostArray[indexPath.row].image
+            cell.textContent.text = currentPostArray[indexPath.row].content
+            
             DatabaseBridge.getProfilePic(userID: currentPostArray[indexPath.row].userID) { (data, nil) in
                 if let d = data {
                     cell.userProfilePic.image = UIImage(data: d)
                 }
             }
-            
+            cell.textContent.isUserInteractionEnabled = false
             return cell
         }
     }
@@ -152,12 +159,46 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             currentPostArray.removeAll()
             DatabaseBridge.getPostWithTag(tag: searchText, limit: 20) { (dataSnapshot) in
                 let value = dataSnapshot.value as! NSDictionary
-                
-                for userID in value.allKeys {
-                    DatabaseBridge.singleObservation(path: "users/\(userID)/username", snapshotFunc: { (dataSnapshot) in
-                        let userName = dataSnapshot.value as! String
-                        //TO_DO
-                    })
+
+                var postCount = 20
+                for userID in value.allKeys as! [String] {
+                    if postCount == 0 {
+                        break
+                    }
+                    var thisPostCount = 3
+                    for postData in value[userID] as! [String : UInt] {
+                        let postID = postData.key
+                        if postID == "lastPost" {
+                            continue
+                        }
+                        if thisPostCount == 0 {
+                            break
+                        }
+                        thisPostCount -= 1
+                        postCount -= 1
+                        DatabaseBridge.singleObservation(path: "posts/\(userID)/\(postID)", snapshotFunc: { (dataSnapshot) in
+                            let postValue = dataSnapshot.value as! NSDictionary
+                            
+                            DatabaseBridge.singleObservation(path: "users/\(userID)/username", snapshotFunc: { (dataSnapshot) in
+                                let post = Post()
+                                post.userName = dataSnapshot.value as! String
+                                post.userID = userID
+                                post.time = postValue["timeStamp"] as! uint
+                                post.content = postValue["content"] as? String ?? ""
+                                post.tags = postValue["tags"] as! NSArray as? [String]
+    
+                                DatabaseBridge.getUserPostsImage(uid: userID, pid: postID, callback: { (data, nil) in
+                                    post.image = UIImage(data: data ?? Data())
+                                })
+                                
+                                post.likes = postValue["likes"] as! NSArray as? [String]
+                                
+                                self.currentPostArray.append(post)
+                                self.table.reloadData()
+                            })
+                            
+                        })
+                    }
                 }
             }
         }

@@ -30,6 +30,10 @@ class DatabaseBridge {
         return true;
     }
     
+    static func remove(path : String) {
+        ref.child(path).removeValue()
+    }
+    
     //completion function can't be warpped since it happends in the future
     static func signIn(withEmail : String, password : String, completion : AuthDataResultCallback?){
         Auth.auth().signIn(withEmail: withEmail, password: password, completion : completion)
