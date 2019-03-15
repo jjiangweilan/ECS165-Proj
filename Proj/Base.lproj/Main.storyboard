@@ -125,7 +125,7 @@
             <objects>
                 <viewController storyboardIdentifier="SearchController" id="Kct-7Z-ZK0" customClass="SearchViewController" customModule="Proj" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NTL-Md-Lzf">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="685"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" showsScopeBar="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sU2-8a-WJ4">
@@ -137,7 +137,7 @@
                                 </scopeButtonTitles>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qgu-Yu-M9q">
-                                <rect key="frame" x="0.0" y="144" width="375" height="458"/>
+                                <rect key="frame" x="0.0" y="144" width="375" height="585"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="ET0-XH-HCS">
                                     <rect key="frame" x="0.0" y="451" width="375" height="44"/>
@@ -806,11 +806,11 @@
             <objects>
                 <viewController title="HomePage" id="SYd-QP-3uS" customClass="PostTableViewController" customModule="Proj" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sVV-qM-hy3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="685"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ySA-Am-jyv">
-                                <rect key="frame" x="0.0" y="44" width="375" height="558"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="685"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PWC-Ur-CHE">
                                     <rect key="frame" x="0.0" y="323" width="375" height="44"/>
@@ -961,7 +961,7 @@
             <objects>
                 <viewController storyboardIdentifier="MainProfileViewController" id="GJn-RD-bZ4" customClass="MainProfileViewController" customModule="Proj" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GBp-JE-0II">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="685"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wn3-F6-jFK" userLabel="Header">
@@ -1091,7 +1091,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jSH-ve-n3y">
-                                <rect key="frame" x="0.0" y="348" width="375" height="254"/>
+                                <rect key="frame" x="0.0" y="348" width="375" height="381"/>
                                 <connections>
                                     <segue destination="paA-Ko-8aV" kind="embed" id="xab-9V-Huh"/>
                                 </connections>
@@ -1131,7 +1131,7 @@
             <objects>
                 <viewController id="paA-Ko-8aV" customClass="ProfilePostViewController" customModule="Proj" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ocq-ZQ-Bjx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="254"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="381"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="5" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Nuv-wg-6Ps">

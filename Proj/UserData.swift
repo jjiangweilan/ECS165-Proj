@@ -97,6 +97,9 @@ class UserData {
             if let v = value {
                 userData.follower = v.allKeys as! [String]
             }
+            else {
+                userData.follower = [String]()
+            }
             
             if let c = callback {
                 c()
@@ -107,6 +110,9 @@ class UserData {
             let value = snapshot.value as? NSDictionary
             if let v = value {
                 userData.following = v.allKeys as! [String]
+            }
+            else {
+                userData.follower = [String]()
             }
             
             if let c = callback {

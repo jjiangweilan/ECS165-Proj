@@ -19,63 +19,7 @@ class PostTableViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.dataSource = self
         self.tableView.reloadData()
         
-        postArr.removeAll()
-        let appDel = UIApplication.shared.delegate as! AppDelegate
-        let userData = appDel.userData
-        if userData.uid == "" {
-            return
-        }
-        
-        DatabaseBridge.singleObservation(path: "follow/\(userData.uid)/following") { (dataSnapshot) in
-            if let value = dataSnapshot.value as? NSDictionary {
-                
-            }
-            else {
-                return
-            }
-            let value = dataSnapshot.value as! NSDictionary
-            var postCount = 30
-            for userID in value.allKeys as! [String] {
-                if postCount == 0 {
-                    break
-                }
-                var thisPostCount = 3
-                
-                DatabaseBridge.singleObservation(path: "posts/\(userID)") { (dataSnapshot) in
-                    let postMap = dataSnapshot.value as! NSDictionary
-                    
-                    for value in postMap {
-                        if thisPostCount == 0 {
-                            break
-                        }
-                        let postValue = value.value as! NSDictionary
-                        thisPostCount -= 1
-                        postCount -= 1
-                        
-                        let post = Post()
-                        DatabaseBridge.singleObservation(path: "users/\(userID)/username", snapshotFunc: { (dataSnapshot) in
-                            let post = Post()
-                            post.userName = dataSnapshot.value as! String
-                            post.userID = userID
-                            post.time = postValue["timeStamp"] as! uint
-                            post.content = postValue["content"] as? String ?? ""
-                            post.tags = postValue["tags"] as? NSArray as? [String]
-                            let likes =  postValue["likes"] as? NSDictionary
-                            post.likes = likes?.allValues as? [String]
-                            post.postID = value.key as! String
-
-                            DatabaseBridge.getUserPostsImage(uid: userID, pid: value.key as! String, callback: { (data, nil) in
-                                post.image = UIImage(data: data ?? Data())
-                                
-                                self.postArr.append(post)
-                                self.tableView.reloadData()
-                            })
-
-                        })
-                    }
-                }
-            }
-        }
+        dataUpdate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,4 +82,63 @@ class PostTableViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+    func dataUpdate() {
+        postArr.removeAll()
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        let userData = appDel.userData
+        if userData.uid == "" {
+            return
+        }
+        
+        DatabaseBridge.singleObservation(path: "follow/\(userData.uid)/following") { (dataSnapshot) in
+            if let value = dataSnapshot.value as? NSDictionary {
+                
+            }
+            else {
+                return
+            }
+            let value = dataSnapshot.value as! NSDictionary
+            var postCount = 30
+            for userID in value.allKeys as! [String] {
+                if postCount == 0 {
+                    break
+                }
+                var thisPostCount = 3
+                
+                DatabaseBridge.singleObservation(path: "posts/\(userID)") { (dataSnapshot) in
+                    let postMap = dataSnapshot.value as! NSDictionary
+                    
+                    for value in postMap {
+                        if thisPostCount == 0 {
+                            break
+                        }
+                        let postValue = value.value as! NSDictionary
+                        thisPostCount -= 1
+                        postCount -= 1
+                        
+                        let post = Post()
+                        DatabaseBridge.singleObservation(path: "users/\(userID)/username", snapshotFunc: { (dataSnapshot) in
+                            let post = Post()
+                            post.userName = dataSnapshot.value as! String
+                            post.userID = userID
+                            post.time = postValue["timeStamp"] as! uint
+                            post.content = postValue["content"] as? String ?? ""
+                            post.tags = postValue["tags"] as? NSArray as? [String]
+                            let likes =  postValue["likes"] as? NSDictionary
+                            post.likes = likes?.allValues as? [String]
+                            post.postID = value.key as! String
+                            
+                            DatabaseBridge.getUserPostsImage(uid: userID, pid: value.key as! String, callback: { (data, nil) in
+                                post.image = UIImage(data: data ?? Data())
+                                
+                                self.postArr.append(post)
+                                self.tableView.reloadData()
+                            })
+                            
+                        })
+                    }
+                }
+            }
+        }
+    }
 }

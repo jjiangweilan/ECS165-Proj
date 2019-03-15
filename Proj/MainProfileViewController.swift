@@ -12,7 +12,7 @@ class MainProfileViewController: UIViewController {
     enum MainProfileViewMode {
         case ObserveMode, ProfileMode
     }
-    
+    var feedPage : UIViewController! = nil
     var observingID : String! = nil
     
     @IBOutlet weak var modeButton : UIButton!
@@ -124,10 +124,17 @@ class MainProfileViewController: UIViewController {
         let appDel = UIApplication.shared.delegate as! AppDelegate
         DatabaseBridge.followUser(followingID: self.userData.uid)
         follower?.append(appDel.userData.userName)
+        appDel.userData.following.append(userData.userName)
         
         modeButton.setTitle("Followed", for: .normal)
         modeButton.removeTarget(nil, action: nil, for: .allEvents)
         modeButton.addTarget(self, action: #selector(self.unfollow), for: .touchUpInside)
+        
+        for c in appDel.window!.rootViewController?.presentedViewController!.children ?? [UIViewController]() {
+            if let controller = c as? PostTableViewController {
+                controller.dataUpdate()
+            }
+        }
     }
     
     @objc func dismissWithAnimation() {
@@ -135,16 +142,18 @@ class MainProfileViewController: UIViewController {
     }
     
     @objc func unfollow() {
-        let appDel = UIApplication.shared.delegate as! AppDelegate
-        DatabaseBridge.unfollow(uid: self.userData.uid)
-        let index : Int = appDel.userData.following.firstIndex(of: self.userData.uid) ?? -1
-        if (index != -1) {
-            appDel.userData.following.remove(at: index)
-        }
-        
+
+        DatabaseBridge.unfollow(uid: userData.uid)
         modeButton.setTitle("Follow", for: .normal)
         modeButton.removeTarget(nil, action: nil, for: .allEvents)
         modeButton.addTarget(self, action: #selector(self.follow), for: .touchUpInside)
+        
+        let appDel = UIApplication.shared.delegate as! AppDelegate
+        for c in appDel.window!.rootViewController?.presentedViewController!.children ?? [UIViewController]() {
+            if let controller = c as? PostTableViewController {
+                controller.dataUpdate()
+            }
+        }
     }
     
     func changeViewData() {

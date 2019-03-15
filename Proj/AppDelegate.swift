@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 self.userData.uid = user.uid
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+                
+                
                 self.window?.rootViewController?.present(controller, animated: true, completion: nil)
                 
                 for c in controller.children {
